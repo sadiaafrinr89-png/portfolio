@@ -444,7 +444,7 @@ header {
 .project-header {
   display: grid;
   grid-template-columns: 3fr 7fr;
-  align-items: end;
+  align-items: start;
   gap: 2rem;
 }
 
@@ -471,7 +471,6 @@ header {
   font-size: 1.1rem;
   line-height: 1.55;
   color: #64748b;
-  padding-top: 1.4rem;
   max-width: 44ch;
   margin-left: auto;
 }
@@ -628,7 +627,6 @@ header {
 .tool-marquee-track {
   display: flex;
   width: max-content;
-  gap: 2rem;
   animation: toolMarquee 30s linear infinite;
   will-change: transform;
   -webkit-backface-visibility: hidden;
@@ -661,6 +659,7 @@ header {
   align-items: center;
   gap: 0.85rem;
   flex-shrink: 0;
+  margin-right: 2rem;
 }
 
 .tool-icon {
@@ -723,17 +722,36 @@ footer {
   max-width: 560px;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.75rem;
+}
+
 .footer-email-link {
   display: inline-block;
   font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 500;
   color: #faf7f3;
-  border-bottom: 1.5px solid transparent;
+  position: relative;
+  padding-bottom: 0.2rem;
 }
 
-.footer-email-link:hover {
-  border-bottom-color: #faf7f3;
+.footer-email-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: #faf7f3;
+  transition: var(--transition-smooth);
+}
+
+.footer-email-link:hover::after {
+  width: 100%;
 }
 
 .footer-watermark {
