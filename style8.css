@@ -199,7 +199,7 @@ a {
 
 /* --- Header & Navigation (floating pill) --- */
 .nav-spacer {
-  height: 103px;
+  height: 0;
 }
 
 header {
@@ -352,13 +352,36 @@ header {
 .hero-section {
   position: relative;
   overflow: hidden;
-  padding-top: 9rem;
+  padding-top: calc(9rem + 103px);
   padding-bottom: 9rem;
   background-color: #f1f5f9;
   border-bottom: 1px solid #eaeaea;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  font-family: 'Yarndings 12', sans-serif;
+  font-size: 50px;
+  line-height: 1.04;
+  letter-spacing: 1px;
+  word-break: break-all;
+  color: rgba(15, 23, 41, 0.05);
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero-particles-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
 }
 
 .hero-section .hero-title {
