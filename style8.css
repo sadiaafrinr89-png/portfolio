@@ -210,6 +210,11 @@ header {
   z-index: 100;
   width: calc(100% - 3rem);
   max-width: 934px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+header.nav-hidden {
+  transform: translateX(-50%) translateY(-150%);
 }
 
 .nav-inner {

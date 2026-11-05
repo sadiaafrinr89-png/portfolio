@@ -33,6 +33,40 @@ document.addEventListener('DOMContentLoaded', () => {
     menuBtn.setAttribute('aria-expanded', String(isOpen));
   });
 
+  // --- Hide Nav on Scroll Down, Reveal on Scroll Up ---
+  const reduceMotionNav = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastScrollY = window.scrollY;
+  let navScrollTicking = false;
+
+  function handleNavScroll() {
+    const currentScrollY = window.scrollY;
+    const delta = currentScrollY - lastScrollY;
+
+    if (currentScrollY <= header.offsetHeight) {
+      header.classList.remove('nav-hidden');
+    } else if (Math.abs(delta) > 6) {
+      if (delta > 0) {
+        header.classList.add('nav-hidden');
+        mobileMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        header.classList.remove('nav-hidden');
+      }
+    }
+
+    lastScrollY = currentScrollY;
+    navScrollTicking = false;
+  }
+
+  if (!reduceMotionNav) {
+    window.addEventListener('scroll', () => {
+      if (!navScrollTicking) {
+        requestAnimationFrame(handleNavScroll);
+        navScrollTicking = true;
+      }
+    }, { passive: true });
+  }
+
   // --- Navigation Offset Handler for Sticky Navbar ---
   const navLinks = document.querySelectorAll('.nav-link, #mobileMenu a, .btn-resume');
   navLinks.forEach(link => {
