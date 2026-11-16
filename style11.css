@@ -1856,3 +1856,6 @@ body.cursor-active button {
   height: 110px;
   margin: 0;
 }
+
+/* Preserve the selected artwork's exact pencil texture. */
+.hero-handwritten-arrow { mix-blend-mode: multiply; }
