@@ -1872,3 +1872,11 @@ body.cursor-active button {
   left: calc(100% - 21.27px);
   top: calc(.8em - 4.55px);
 }
+
+/* Figma 828:1326: tail beside the period, outward loop, down-left head. */
+.hero-handwritten-last-line .hero-handwritten-arrow {
+  width: 110px;
+  height: 140px;
+  left: calc(100% + 1px);
+  top: calc(.8em - 10px);
+}
