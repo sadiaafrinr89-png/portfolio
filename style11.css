@@ -1859,3 +1859,10 @@ body.cursor-active button {
 
 /* Preserve the selected artwork's exact pencil texture. */
 .hero-handwritten-arrow { mix-blend-mode: multiply; }
+
+/* The flipped artwork's actual tail is at (225, 525), not its viewport edge.
+   Offset the viewport so that painted endpoint sits beside the final period. */
+.hero-handwritten-last-line .hero-handwritten-arrow {
+  left: calc(100% - 2.5px);
+  top: calc(.8em - 21px);
+}
