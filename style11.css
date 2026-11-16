@@ -1,0 +1,1858 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Fuggles&family=La+Belle+Aurore&display=swap');
+
+/* --- Design tokens: editorial serif portfolio. Big Fraunces display type
+   carries the hero, Inter carries everything functional. One warm
+   terracotta-to-amber brand gradient, used sparingly (hero name + badge),
+   everything else stays a quiet off-white / deep-ink neutral. --- */
+:root {
+  --bg: oklch(99% 0.003 95);
+  --surface: oklch(96.5% 0.008 90);
+  --ink: oklch(20% 0.03 260);
+  --ink-soft: oklch(40% 0.025 260);
+  --line: oklch(20% 0.03 260 / 0.12);
+  --panel: oklch(17% 0.02 260);
+  --panel-text: oklch(96% 0.005 260);
+  --panel-text-soft: oklch(78% 0.02 260);
+  --panel-line: oklch(96% 0.005 260 / 0.14);
+  --brand-dark: oklch(33% 0.13 35);
+  --brand-light: oklch(72% 0.15 68);
+  --brand-flat: oklch(46% 0.14 40);
+  --brand-tint: oklch(91% 0.045 35);
+  --badge-sky-bg: oklch(86% 0.07 215);
+  --badge-sky-text: oklch(28% 0.08 230);
+  --badge-navy: oklch(32% 0.09 240);
+  --badge-teal: oklch(72% 0.13 195);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 0 5vw;
+}
+
+.fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1; transform: none; transition: none; }
+}
+
+/* --- Nav: plain wordmark on the left, a separate auto-width pill of plain
+   text links on the right — not one bar spanning the full width. --- */
+.nav-spacer { height: 0; }
+
+.nav {
+  position: fixed;
+  top: 18px;
+  left: 5vw;
+  right: 5vw;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.4s var(--ease);
+}
+
+.nav.nav--hidden { transform: translateY(-140%); }
+
+.logo {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 900;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.logo-dot { color: var(--brand-dark); }
+
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px;
+  box-shadow: 0 10px 30px oklch(20% 0.03 260 / 0.12);
+}
+
+.nav-links { display: flex; align-items: center; gap: 2px; }
+
+.nav-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 9px 15px;
+  border-radius: 999px;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.nav-link:hover {
+  background: var(--brand-tint);
+  color: var(--brand-dark);
+  transform: translateY(-1px);
+}
+
+.nav-link--resume {
+  color: var(--bg);
+  background: var(--brand-dark);
+  font-weight: 600;
+}
+
+.nav-link--resume:hover {
+  background: var(--brand-dark);
+  color: var(--bg);
+  box-shadow: 0 10px 20px oklch(33% 0.13 35 / 0.3);
+}
+
+.menu-btn {
+  display: none;
+  width: 38px;
+  height: 38px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--ink);
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 86px;
+  left: 5vw;
+  right: 5vw;
+  z-index: 99;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px oklch(20% 0.03 260 / 0.14);
+  padding: 10px;
+  flex-direction: column;
+}
+
+.mobile-menu a {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 14px 16px;
+  border-radius: 14px;
+}
+
+.mobile-menu a:hover { background: var(--line); color: var(--ink); }
+
+.mobile-menu.open { display: flex; }
+
+/* --- Hero: full-bleed vw-scaled composition, modeled on wattenberger.com's
+   hero — an SVG clipPath built from two text lines, with a gradient-filled
+   div clipped to that shape, plus vw-relative type and a left-margin
+   offset instead of a centered container. --- */
+.hero {
+  position: relative;
+  width: 100%;
+  padding: 0;
+}
+
+.hero-inner {
+  min-height: 100svh;
+  padding-top: clamp(110px, 10vh, 180px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(15px, min(2vw, 3vh), 44px);
+  line-height: 1.2;
+  color: var(--ink);
+  max-width: 30em;
+  margin: 0 0 -0.4em 12.1vw;
+  transform: rotate(-10deg);
+  transform-origin: left center;
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(44px, min(13vw, 26vh), 200px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-name-line { display: block; }
+.hero-name-line--ink { color: var(--ink); }
+.hero-name-line--brand { color: var(--brand-dark); }
+
+.hero-lede,
+.hero-note {
+  font-family: var(--font-display);
+  font-size: clamp(16px, min(1.9vw, 2.9vh), 36px);
+  line-height: 1.3;
+  color: var(--ink);
+  max-width: 30em;
+}
+
+.hero-lede {
+  margin: clamp(14px, 2vh, 32px) 0 0 clamp(16px, 15vw, 320px);
+}
+
+.hero-note {
+  margin: clamp(6px, 1vh, 14px) 0 0 clamp(16px, 15vw, 320px);
+  color: var(--ink-soft);
+}
+
+.hero-lede em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.hero-say-hello {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: clamp(20px, 3vh, 36px) 0 0 clamp(16px, 15vw, 320px);
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.hero-say-hello-text {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.3s var(--ease);
+}
+
+.hero-say-hello-arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.hero-say-hello:hover .hero-say-hello-text { opacity: 0.7; }
+.hero-say-hello:hover .hero-say-hello-arrow { transform: translate(3px, -3px); }
+
+/* Hero content rests at the bottom of the first viewport. */
+.hero-inner {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(260px, 24vw, 320px);
+  column-gap: clamp(40px, 6vw, 100px);
+  min-height: 100svh;
+  grid-template-rows: 1fr auto auto auto;
+  align-content: stretch;
+  padding: 116px 7vw 24px 5vw;
+}
+.hero-eyebrow { grid-column: 1 / -1; grid-row: 2; margin-left: 7.1vw; }
+.hero-name {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  width: 100%;
+  margin: 0;
+  font-size: clamp(44px, min(13vw, 26vh), 200px);
+}
+.hero-lede, .hero-note, .hero-say-hello {
+  grid-column: 1;
+  margin-left: clamp(0px, 6vw, 100px);
+  max-width: 30em;
+}
+.hero-lede { grid-row: 4; margin-top: 32px; }
+.hero-note { grid-row: 4; align-self: end; margin-top: clamp(32px, 4vh, 48px); }
+.hero-lede, .hero-note { font-size: clamp(16px, min(1.9vw, 2.9vh), 36px); }
+.hero-say-hello { justify-self: start; align-self: start; }
+.hero-portrait {
+  position: relative;
+  grid-column: 2;
+  grid-row: 4;
+  align-self: end;
+  width: 100%;
+  aspect-ratio: 1;
+  margin: 32px 0 0;
+  overflow: hidden;
+  background: #eeede9;
+  isolation: isolate;
+}
+.hero-portrait-still, .hero-portrait-motion {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-portrait-motion { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.hero-portrait.is-ready .hero-portrait-motion { opacity: 1; }
+@media (max-width: 860px) {
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: calc(100svh - 160px);
+    padding: 0;
+  }
+  .hero-eyebrow { order: 0; margin-left: 0; }
+  .hero-name { order: 1; width: 100%; font-size: clamp(44px, 12vw, 100px); }
+  .hero-portrait { order: 2; align-self: flex-end; width: clamp(190px, 52vw, 280px); margin: 28px 0 8px; flex-shrink: 0; }
+  .hero-lede { order: 3; }
+  .hero-note { order: 4; align-self: flex-start; }
+  .hero-say-hello { order: 5; }
+  .hero-lede, .hero-note, .hero-say-hello { margin-left: 0; }
+  .hero-lede, .hero-note { font-size: 18px; }
+}
+
+/* --- Section shared --- */
+section { padding: 112px 0; }
+
+.section-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(32px, 4.4vw, 52px);
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  text-wrap: balance;
+  margin-bottom: 14px;
+}
+
+/* --- Work: pixel-matched to the Figma handoff frame (node 528:1459,
+   file 3JMAm6XHOEyz8qbmnCccyc) — a "yearbook" style numbered card,
+   cross-checked against the live site it's drawn from,
+   https://www.hiss.sydney/. Colors/shape are taken directly from
+   that node (not estimated) per explicit request to match Figma
+   exactly: card fill #f5f3ee (not the site's cream #fffdec), dot
+   #73a757 (Figma's own green, not the site's oxblood #680900),
+   near-black hairline border (#0e0e0c), every corner rounded except
+   top-left, where a small folder-tab notch (.work-card-tab) sits.
+   The source design's year badge is replaced with a project-type
+   label per request. The arrow glyph (.work-card-arrow) is set in
+   'Queens:Medium' in Figma — not a webfont available to this project
+   (no CDN/Google Fonts match), so it stays on the site's Fraunces as
+   the closest available fallback. --- */
+.work-heading-accent { color: #680900; }
+
+/* --- Work intro: a one-screen splash before the card stack starts.
+   Fetched directly from Figma node 570:47 via the Figma MCP. Sticky
+   mechanism below (.work-intro-bg-wrap / .work-intro-spacer) is ported
+   directly from hiss.sydney's own deployed CSS (curl + grep on the
+   live stylesheet): .yearbook_bg_wrap{margin-bottom:-300svh} wrapping
+   a .yearbook_home_bg{height:100svh;position:sticky;top:0;overflow:clip}
+   plus a .yearbook_home_spacer{height:300svh} sibling. The negative
+   margin claws back the spacer's extra height so the next section
+   starts right after only 100svh of visible space, while the sticky
+   intro still has 300svh of scroll room underneath it to stay pinned
+   — so the card stack slides up and visibly covers it, exactly like
+   the reference site. */
+.work-intro-bg-wrap {
+  /* Matches the first card's cream fill (#f5f3ee), not the page bg
+     (--bg, near-white) — same fix as .work-card-wrap's own background:
+     while card 1 is sliding up and covering the still-pinned intro,
+     any exposed sliver of this wrap's own background needs to blend
+     with the incoming card, not read as a separate white band. */
+  background: #f5f3ee;
+  /* Must stay pinned/hidden-behind for exactly as long as it takes
+     ALL 5 cards to finish entering (100vh of scroll each = 500svh
+     total, matching .work-list's real flow height). 300svh only
+     covered ~3 cards, which is why the glitch used to show up at
+     project 4. The old 600svh "safety buffer" overshot the other
+     way: it kept the intro pinned for 100svh *after* card 5 had
+     already unstuck and scrolled away, so the intro surfaced again
+     on its own and visibly collided with the About section, which
+     starts right after .work-list in flow. Matching it exactly means
+     the intro un-sticks at the same scroll position card 5 does, so
+     it departs together with the last card instead of resurfacing
+     between the project stack and About. */
+  margin-bottom: -500svh;
+}
+
+.work-intro {
+  height: 100svh;
+  position: sticky;
+  top: 0;
+  overflow: clip;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 5vw;
+}
+
+.work-intro-spacer {
+  height: 500svh;
+}
+
+.work-intro-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin-bottom: clamp(32px, 6vh, 64px);
+}
+
+.work-intro-cluster {
+  display: flex;
+  justify-content: center;
+  margin-bottom: clamp(28px, 4vh, 48px);
+}
+
+.work-intro-photo {
+  width: clamp(70px, 6.5vw, 108px);
+  height: clamp(95px, 8.8vw, 146px);
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #0e0e0c;
+  box-shadow: 0 14px 28px rgba(14, 14, 12, 0.14);
+}
+
+.work-intro-photo--a { transform: rotate(-9deg) translateX(14px); z-index: 1; }
+.work-intro-photo--b { transform: translateY(-6px); z-index: 2; margin: 0 -14px; }
+.work-intro-photo--c { transform: rotate(9deg) translateX(-14px); z-index: 1; }
+
+.work-intro-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.work-intro-sub {
+  max-width: 560px;
+  margin: clamp(20px, 3vh, 32px) 0 0;
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.work-intro-badge {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 24px;
+  text-align: left;
+  margin-top: clamp(40px, 7vh, 80px);
+}
+
+.work-intro-badge-num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding-right: 20px;
+  border-right: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.work-intro-badge-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 320px;
+}
+
+@media (max-width: 860px) {
+  .work-intro-badge { flex-direction: column; align-items: flex-start; gap: 10px; text-align: left; }
+  .work-intro-badge-num { border-right: none; padding-right: 0; }
+}
+
+/* Card stack: sticky-scroll reveal, ported from hiss.sydney's actual
+   deployed CSS (fetched directly — curl + grep on the live stylesheet,
+   not guessed): .yearbook_collection_item{height:100vh;position:sticky;
+   top:0}. The reveal comes from each 100vh sticky card stacking in
+   normal document flow, later cards painting over earlier ones as they
+   slide up. On top of that base mechanism, .work-card-tab adds a
+   per-card horizontal stagger (user-requested, not in the ported CSS)
+   so tabs line up side by side left-to-right across cards instead of
+   all sitting at the same x — see the nth-child rules below. */
+.work-list {
+  padding: 0 5vw;
+}
+
+.work-card-wrap {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  padding: clamp(4px, 0.8vh, 12px) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Card is sized smaller than the full sticky wrapper (not flex:1
+   stretched edge-to-edge) and centered within it, so it reads as a
+   card with real margin rather than filling the screen. Fixed vh
+   height (not content-based) keeps the margin consistent across all 5
+   cards regardless of how much text each one has. Scroll/sticky
+   mechanism (.work-card-wrap's position/top/min-height) and the JS
+   scale effect are untouched — this only changes the card's own size. */
+.work-card {
+  height: 88vh;
+  max-height: 840px;
+  /* Explicit auto top/bottom margin as a robust, guaranteed vertical
+     centering within .work-card-wrap, on top of the wrap's own
+     justify-content:center — belt-and-suspenders so the card lands
+     dead-center regardless of any edge-case sizing quirk. */
+  margin: auto 0;
+}
+
+/* .work-card-tab is an HTML child INSIDE .work-card (not a flex
+   sibling before it), so it's positioned absolute, anchored to
+   .work-card (position:relative below), sitting flush above it with
+   zero overlap and a complete border on its own open sides — same
+   proven-correct formula as before the sticky-stack CSS port, which
+   wrongly assumed a flex-sibling structure and caused the tab to
+   render inline, pushed in by the card's own padding, instead of
+   floating above it as a notch. */
+.work-card-tab {
+  --tab-h: clamp(26px, 2.78vw, 46px);
+  position: absolute;
+  top: calc(-1 * var(--tab-h));
+  left: -1px;
+  width: clamp(100px, 10.5vw, 175px);
+  height: var(--tab-h);
+  background: #f5f3ee;
+  border: 1px solid #c5c2bb;
+  border-bottom: none;
+  border-radius: clamp(14px, 1.45vw, 24px) clamp(14px, 1.45vw, 24px) 0 0;
+}
+
+/* Each card's tab shifts right by exactly its own width, so
+   consecutive tabs sit flush side by side, edge to edge, left-to-right
+   across the cards — like binder dividers — instead of all sitting at
+   the same x position. No gap between them (see border below). */
+.work-card-wrap:nth-child(1) .work-card-tab { transform: translateX(0%); }
+.work-card-wrap:nth-child(2) .work-card-tab { transform: translateX(calc(100% - 1px)); }
+.work-card-wrap:nth-child(3) .work-card-tab { transform: translateX(calc(200% - 2px)); }
+.work-card-wrap:nth-child(4) .work-card-tab { transform: translateX(calc(300% - 3px)); }
+.work-card-wrap:nth-child(5) .work-card-tab { transform: translateX(calc(400% - 4px)); }
+
+.work-card {
+  position: relative;
+  width: 100%;
+  background: #f5f3ee;
+  border: 1px solid #c5c2bb;
+  border-radius: clamp(20px, 2.3vw, 38px);
+  padding: clamp(26px, 3vw, 46px);
+  /* Now that the card stretches to fill its sticky wrapper (flex:1,
+     set above), it needs to be a flex column itself so its own content
+     (.work-card-top + .work-card-body) centers as a group within the
+     extra height, instead of staying top-aligned and leaving a dead
+     empty gap at the bottom. Existing internal spacing (e.g.
+     .work-card-top's margin-bottom) is untouched. */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Entrance scale (full-screen-ish down to actual size, matching
+     hiss.sydney) is driven by script11.js, which sets this inline per
+     scroll position. Top-anchored origin so the shrink reads as
+     "settling into its pinned top edge" rather than scaling evenly
+     from the center. */
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* Card 1's tab sits flush at the very left edge (translateX(0%)),
+   covering the top-left corner — so it must stay square there, or the
+   tab's straight edge crosses the rounded curve underneath. Cards 2-5
+   have their tab shifted right, exposing that corner, so it stays
+   rounded for them. */
+.work-card-wrap:nth-child(1) .work-card { border-top-left-radius: 0; }
+
+.work-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: clamp(32px, 5vw, 82px);
+}
+
+.work-card-heading {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vw, 23px);
+  /* Figma's own title column caps at 42.76% of the content row (its
+     title text is two short words); our real titles run longer
+     ("BRAC Central Executive Dashboard"), so this is widened to 65%
+     to avoid forcing them to an ugly 3-line wrap. */
+  max-width: 65%;
+}
+
+.work-card-kicker {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 0.9vw, 15px);
+}
+
+.work-card-dot {
+  width: clamp(14px, 1.69vw, 28px);
+  height: clamp(14px, 1.69vw, 28px);
+  border-radius: 50%;
+  background: #73a757;
+  flex-shrink: 0;
+}
+
+/* Each project card gets its own dot hue (same lightness/chroma as the
+   original green, just rotated around the wheel) so the kicker color
+   doubles as a quick visual index across the 5 cards — kept as a
+   deliberate departure from Figma, which only varies 2 dot colors
+   across its (partly unfinished-looking) 3 populated card instances. */
+.work-list .work-card-wrap:nth-of-type(1) .work-card-dot { background: oklch(63% 0.12 135); }
+.work-list .work-card-wrap:nth-of-type(2) .work-card-dot { background: #0e0e0c; }
+.work-list .work-card-wrap:nth-of-type(3) .work-card-dot { background: oklch(65% 0.14 40); }
+.work-list .work-card-wrap:nth-of-type(4) .work-card-dot { background: oklch(60% 0.14 300); }
+.work-list .work-card-wrap:nth-of-type(5) .work-card-dot { background: oklch(65% 0.12 190); }
+
+/* Node 515:2266 (the filled-in Inventory card) uses Fraunces, not Inter,
+   for this label, at ink color rather than the brown-orange I'd used —
+   and at a much smaller size now that it's a specific sub-system name
+   ("BRAC ERP System") rather than a longer generic category phrase. */
+.work-card-type {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(14px, 1.45vw, 24px);
+  letter-spacing: -0.057em;
+  color: var(--ink);
+}
+
+/* Fixed to 2 lines' worth of height (line-height 0.9 × font-size × 2) so
+   every card matches card 1 (the reference — "BRAC Inventory Management"
+   wraps to 2 lines) regardless of whether its own title is short enough
+   to fit on 1 line. Short titles just sit top-aligned in the reserved
+   space rather than shrinking the card. */
+.work-card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(32px, 5.45vw, 90px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
+  min-height: calc(0.9em * 2);
+}
+
+.work-card-index {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(48px, 7.8vw, 129px);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.work-card-body {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(16px, 1.84vw, 30px);
+  max-width: 1320px;
+}
+
+.work-card-media {
+  flex: 1.13 1 0;
+  min-width: 0;
+  aspect-ratio: 738 / 492;
+  border-radius: clamp(6px, 0.48vw, 8px);
+  overflow: hidden;
+}
+
+.work-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+
+.work-card:hover .work-card-media img { transform: scale(1.05); }
+
+.work-card-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.84vw, 30px);
+}
+
+.work-card-arrow {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.84vw, 30px);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.work-card-desc {
+  font-size: clamp(14px, 1.21vw, 20px);
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+/* Node 515:2266 replaces the dashed "Explore this yearbook" CTA
+   entirely with a plain, unstyled tag — no border, no background, no
+   link affordance. Kept as a real <a> (not a <span>) so "view the
+   mockup full-size" still works, but visually it reads as a caption,
+   not a button, matching the source exactly. */
+.work-card-tag {
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(13px, 0.92vw, 16px);
+  color: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .work-list { padding: 0 24px; }
+  .work-card-heading { max-width: 58%; }
+  .work-card-body { flex-direction: column; align-items: stretch; }
+  .work-card-media { aspect-ratio: 3 / 2; }
+  /* hiss.sydney's own site keeps the sticky stack on mobile too, but a
+     100vh pinned card is a much bigger ask on a small screen with
+     address-bar chrome eating into real viewport height — falls back
+     to a plain stacked list instead. */
+  .work-card-wrap { position: static; min-height: 0; margin-bottom: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card:hover .work-card-media img { transform: none; }
+}
+
+/* --- About: two-column layout (headline left, copy right), styled with
+   the hero's own system — Fraunces throughout, the same ink/oxblood
+   two-tone line treatment as the hero name, and badges that reuse the
+   hero badge's exact amber palette so the two moments rhyme. --- */
+.about {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 6vh, 120px) 0;
+}
+
+.about-intro { position: relative; margin-bottom: 112px; }
+
+.about-heading-accent { color: #680900; }
+
+.about-subtitle {
+  position: absolute;
+  left: 111px;
+  top: 127.86px;
+  transform: translateX(-50%) rotate(-8.57deg);
+  width: 192px;
+  text-align: center;
+  font-family: 'La Belle Aurore', cursive;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 20.9px;
+  color: #683d3d;
+  white-space: nowrap;
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1fr);
+  gap: clamp(48px, 6vw, 100px);
+  align-items: start;
+}
+
+.about-text { max-width: 620px; }
+
+/* --- About media: photo collage, pixel-matched to Figma node 468:61
+   (file 3JMAm6XHOEyz8qbmnCccyc). All sizes/positions below are taken
+   directly from that node's layout, not estimated. The collage is a
+   fixed 361.3 × 368.91px composition; .about-photo-collage-frame reserves
+   that space scaled by --collage-scale (1 = pixel-perfect, overridden
+   below 860px since the Figma frame itself is a fixed desktop size). --- */
+.about-media {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-photo-collage-frame {
+  --collage-scale: 1;
+  width: calc(361.3px * var(--collage-scale));
+  height: calc(368.91px * var(--collage-scale));
+  position: relative;
+}
+
+.about-photo-collage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 361.3px;
+  transform: scale(var(--collage-scale));
+  transform-origin: top left;
+}
+
+.about-photo-main {
+  width: 274px;
+  height: 150px;
+  overflow: hidden;
+}
+
+.about-photo-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Gradient-clip text is an Impeccable "AI slop" ban (decorative gradients
+   on text). Deliberate exception here, confirmed with the user: this
+   matches the exact white→oxblood gradient from Figma node 468:71,
+   needed so the signature stays legible both on the photo (white half)
+   and the page background (oxblood half). Do not "fix" this away. */
+.about-signature {
+  position: absolute;
+  left: 236px;
+  top: 86px;
+  width: 78px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fuggles', cursive;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 25px;
+  text-align: center;
+  white-space: nowrap;
+  transform: rotate(-4deg);
+  background-image: linear-gradient(86.38deg, #ffffff 50.532%, #550c05 56.372%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.about-photo-row {
+  position: absolute;
+  left: 61.3px;
+  top: 149.91px;
+  width: 300px;
+  height: 219px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.about-photo-portrait {
+  width: 152px;
+  height: 152px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-photo-portrait img {
+  position: absolute;
+  left: -20.42%;
+  top: 0.18%;
+  width: 133.33%;
+  height: 100%;
+  max-width: none;
+}
+
+.about-photo-small {
+  width: 105px;
+  height: 118px;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-photo-small img {
+  position: absolute;
+  left: -0.16%;
+  top: -51.5%;
+  width: 100%;
+  height: 158.12%;
+  max-width: none;
+}
+
+.about-copy p {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.45;
+  color: var(--ink);
+  max-width: 34ch;
+  margin-top: clamp(14px, 2vh, 32px);
+}
+
+.about-copy p:first-child { margin-top: 0; }
+.about-copy p + p { margin-top: 30px; }
+
+.badge {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.46em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 0.32em 0.7em;
+  display: inline-flex;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.badge--amber { background: var(--badge-sky-bg); color: var(--badge-sky-text); border-radius: 999px; }
+.badge--ink { background: var(--badge-navy); color: var(--bg); border-radius: 999px; }
+.badge--brand { background: var(--badge-teal); color: var(--ink); border-radius: 6px; }
+
+/* --- Experience: a real section title this time — .section-heading,
+   the exact class .about uses, so the title is guaranteed identical in
+   font/weight/size/tracking to every other section's title instead of
+   a smaller custom label standing in for one. The list borrows the
+   site's own numbered-entry motif from the Work section's giant card
+   numerals (.work-card-index), scaled down to a quiet margin numeral
+   here, so each role reads as an indexed entry rather than a plain
+   row — the one piece of sitewide "design language" (Work's signature
+   numbering) the earlier passes never carried over. No hover state:
+   this is a static read, not an interactive list. --- */
+.experience {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--ink);
+  padding: clamp(24px, 6vh, 120px) 0;
+}
+
+.experience-intro { margin-bottom: 72px; }
+
+.experience-heading-accent { color: #680900; }
+
+.xp-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+}
+
+.xp-row {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+}
+
+.xp-row:first-child { border-top: none; padding-top: 0; }
+.xp-row:last-child { padding-bottom: 0; }
+
+.xp-index {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 32px);
+  color: var(--ink-soft);
+  flex-shrink: 0;
+  width: 2ch;
+}
+
+.xp-row-body { display: flex; flex-direction: column; gap: 6px; }
+
+.xp-co {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line);
+  width: fit-content;
+}
+
+.xp-role {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 28px);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.xp-date {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+/* --- Contact / Footer panel: full-bleed colored section (per Figma node
+   713:487/713:488) — no card, no rounded corners, no white margin; the
+   figma-exact dark navy fills the entire section edge to edge. --- */
+.contact-panel {
+  --ftr-ink: #ffffe8;
+  --ftr-ink-soft: rgb(255 255 232 / 0.8);
+  --ftr-divider: #aa9899;
+  --ftr-wordmark: rgb(255 255 255 / 0.1);
+  --ftr-chip-bg: #ffffe8;
+  --ftr-chip-ink: #0e1624;
+
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #330703;
+  color: var(--ftr-ink);
+  /* Vertical padding only — .contact-inner already carries the shared
+     .container class (padding: 0 5vw), the same mechanism every other
+     section's *-inner uses for its horizontal inset. Adding horizontal
+     padding here too would stack on top of that and double it, which is
+     what was narrowing the footer's content column vs. the hero's (which
+     resolves to the same 5vw/90vw via .hero-name's own width:90% + auto
+     margins — verified equal at 1539px wide on a 1710px viewport). */
+  padding: clamp(32px, 6vw, 60px) 0;
+}
+
+.contact-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(28px, 4vw, 48px);
+}
+
+/* --- Footer flower playground: a physics layer (footer-flowers.js,
+   Matter.js), sized via inset:0 to its positioned ancestor .contact-panel —
+   the whole colored section, floor to ceiling. footer-flowers.js reads this
+   element's own getBoundingClientRect() for every wall/floor position, so
+   the floor sits at the bottom of the full section automatically — no
+   physics code changed. z-index:1 keeps it behind the real content
+   (.contact-inner is z-index:2) so settled flowers never trap a click meant
+   for the social icons or sitemap links. --- */
+.footer-flowers {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fw-flower {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+  cursor: grab;
+  will-change: transform;
+  touch-action: none;
+}
+
+.fw-flower.is-dragging { cursor: grabbing; }
+
+.fw-flower-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+.fw-petal {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fw-flower.is-bloom .fw-petal {
+  transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-petal { transition: none; }
+  .fw-flower.is-bloom .fw-petal { transform: none; }
+}
+
+.ftr-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(28px, 4vw, 54px);
+}
+
+.ftr-heading {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 3vw, 36px);
+  min-width: 0;
+}
+
+.ftr-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.1vw, 36px);
+  line-height: 1;
+  color: var(--ftr-ink);
+  margin: 0;
+}
+
+.ftr-headline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(34px, 5.4vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--ftr-ink);
+  text-wrap: balance;
+  margin: 0;
+}
+
+.ftr-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 20px;
+  color: var(--ftr-ink);
+  text-decoration: none;
+}
+
+.ftr-cta-text {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.3s var(--ease);
+}
+
+.ftr-cta-arrow {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.ftr-cta-link:hover .ftr-cta-text { opacity: 0.7; }
+.ftr-cta-link:hover .ftr-cta-arrow { transform: translate(3px, -3px); }
+
+.ftr-socials { display: flex; align-items: center; gap: clamp(16px, 1.8vw, 30px); flex-wrap: wrap; }
+
+.ftr-icon-btn {
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--ftr-chip-bg);
+  color: var(--ftr-chip-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.ftr-icon-btn:hover { transform: translateY(-3px); opacity: 0.85; }
+
+.ftr-divider { height: 1px; background: var(--ftr-divider); opacity: 0.4; }
+
+.ftr-bottom { display: flex; align-items: flex-end; justify-content: flex-end; gap: 24px; flex-wrap: wrap; }
+
+.ftr-wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 320px;
+  line-height: 1;
+  color: var(--ftr-wordmark);
+  margin: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.ftr-credit {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ftr-ink-soft);
+  margin: 0;
+}
+
+/* --- Responsive --- */
+@media (max-width: 860px) {
+  .container { padding: 0 24px; }
+  .nav-links { display: none; }
+  .menu-btn { display: flex; }
+  section { padding: 76px 0; }
+  .hero { padding: 96px 24px 64px; }
+  .about, .experience { padding: 76px 0; }
+  .about-inner { grid-template-columns: 1fr; gap: 24px; }
+  .about-photo-collage-frame { --collage-scale: 0.82; }
+  .experience-intro { margin-bottom: 40px; }
+  .xp-list { max-width: none; }
+  .xp-row { padding: 20px 0; gap: 16px; }
+  .xp-index { font-size: 22px; }
+  .contact-panel { padding: 28px 0 40px; }
+  .ftr-top { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .ftr-bottom { flex-direction: column; align-items: flex-end; gap: 24px; }
+  .ftr-wordmark { font-size: clamp(48px, 20vw, 100px); }
+}
+
+/* --- Custom cursor: a trailing dot + eased ring (JS-driven in script11.js).
+   Grows over interactive elements, grows further + shows a label over work
+   cards. Hidden entirely on touch devices and under reduced-motion, where
+   the native cursor/pointer takes over instead. --- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 300;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--brand-dark);
+  transition: width 0.2s ease-out, height 0.2s ease-out, background-color 0.2s var(--ease);
+}
+
+.cursor-dot--hover {
+  width: 20px;
+  height: 20px;
+}
+
+.cursor-dot--footer {
+  background: var(--bg);
+}
+
+.cursor-particles {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 299;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--ink);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s var(--ease), height 0.3s var(--ease),
+    opacity 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.cursor-ring-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  opacity: 0;
+  transition: opacity 0.2s var(--ease);
+  white-space: nowrap;
+}
+
+.cursor-ring--label {
+  width: 88px;
+  height: 88px;
+  border-color: transparent;
+  background: var(--brand-dark);
+  opacity: 1;
+}
+
+.cursor-ring--label .cursor-ring-label { opacity: 1; }
+
+body.cursor-active,
+body.cursor-active a,
+body.cursor-active button {
+  cursor: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-ring, .cursor-particles { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot, .cursor-ring, .cursor-particles { display: none; }
+}
+
+/* Figma 528:1302: measured against the visible 1654 × 992 hero.
+   Text positions are independent of the portrait's existing grid placement. */
+@media (min-width: 861px) {
+  .hero-eyebrow {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(16px, 1.935vw, 32px);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.2;
+    transform: translate(var(--figma-eyebrow-x, 0px), var(--figma-eyebrow-y, 0px)) rotate(-10deg);
+  }
+  .hero-name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(44px, 12.092vw, 200px);
+    font-weight: 900;
+    line-height: .92;
+    letter-spacing: -.02em;
+    transform: translate(var(--figma-name-x, 0px), var(--figma-name-y, 0px));
+  }
+  .hero-note {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(16px, 1.814vw, 30px);
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.3;
+    max-width: 52vw;
+    transform: translate(var(--figma-note-x, 0px), var(--figma-note-y, 0px));
+  }
+}
+
+/* One artwork in both states: only saturation changes on hover. */
+.hero-portrait {
+  filter: saturate(0);
+  transition: filter 450ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-portrait:hover { filter: saturate(.45); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait { transition: none; }
+}
+
+/* Project refresh: quiet surfaces and clearer reading/action hierarchy. */
+.work-intro-bg-wrap { background: var(--bg); }
+.work-card-wrap { background: transparent; }
+.work-card-top { margin-bottom: clamp(24px, 2.8vw, 46px); }
+.work-card-index { font-size: clamp(40px, 6vw, 98px); color: var(--ink-soft); }
+.work-list .work-card-wrap .work-card-dot { background: var(--brand-dark); }
+.work-card-body { max-width: none; }
+.work-card-media { flex: 1.4 1 0; background: #eeede9; }
+.work-card-media img { object-fit: contain; }
+.work-card-text { gap: clamp(16px, 1.5vw, 24px); }
+.work-card-desc { line-height: 1.6; }
+.work-card-tag {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.05vw, 17px);
+  font-weight: 500;
+  color: var(--brand-dark);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.work-card-media:focus-visible, .work-card-tag:focus-visible { outline: 2px solid var(--brand-dark); outline-offset: 5px; }
+@media (max-width: 860px) {
+  .work-card { height: auto; max-height: none; padding: 24px; }
+  .work-card-tab { width: calc(20% + 1px); }
+  .work-card-heading { max-width: 78%; }
+  .work-card-title { font-size: clamp(28px, 5.45vw, 46px); line-height: 1.02; min-height: 0; }
+  .work-card-index { font-size: 40px; }
+  .work-card-media { flex: none; width: 100%; }
+  .work-card-desc { font-size: 15px; }
+  .work-card-wrap { margin-top: 40px; }
+}
+
+/* Balanced split — approved project-card preview. */
+.work-card {
+  height: min(88svh, 840px);
+  min-height: 0;
+  max-height: 840px;
+  padding: clamp(32px, 3vw, 48px);
+}
+.work-card-top { margin-bottom: clamp(20px, 3vh, 32px); flex: 0 0 auto; }
+.work-card-heading { max-width: 78%; gap: 16px; }
+.work-card-type {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: .02em;
+  color: var(--ink-soft);
+}
+.work-card-dot { width: 10px; height: 10px; }
+.work-card-title {
+  font-size: clamp(40px, 4.2vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -.025em;
+  word-spacing: .02em;
+  min-height: 0;
+  max-width: 19ch;
+}
+.work-card-index { font-size: 48px; line-height: 1; color: var(--ink-soft); }
+.work-card-body {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  gap: 40px;
+}
+.work-card-media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
+  padding: clamp(14px, 1.5vw, 24px);
+  background: #e9e7e1;
+  border-radius: 12px;
+}
+.work-card-screen { display: grid; place-items: center; width: 100%; height: 100%; min-height: 0; overflow: hidden; border-radius: 6px; }
+.work-card-media img { display: block; width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
+.work-card-screen--browser img { margin-top: 0; }
+.work-card:hover .work-card-media img { transform: none; }
+.work-card-text { gap: 24px; }
+.work-card-desc { font-size: 18px; line-height: 1.6; max-width: 40ch; }
+.work-card-tag { font-size: 16px; line-height: 1.5; }
+@media (max-width: 860px) {
+  .work-card { height: auto; min-height: 0; max-height: none; padding: 24px; }
+  .work-card-top { margin-bottom: 24px; gap: 16px; }
+  .work-card-heading { max-width: 82%; gap: 12px; }
+  .work-card-title { font-size: clamp(28px, 5vw, 44px); }
+  .work-card-index { font-size: 32px; }
+  .work-card-type { font-size: 12px; }
+  .work-card-body { flex: none; grid-template-columns: 1fr; grid-template-rows: auto auto; gap: 24px; }
+  .work-card-media { height: auto; aspect-ratio: 4 / 3; }
+  .work-card-desc { font-size: 16px; max-width: none; }
+}
+
+/* Compact introduction to the existing project stack. */
+.work-intro {
+  height: 76svh;
+  min-height: 500px;
+  padding: 32px 5vw;
+}
+.work-intro-eyebrow {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .025em;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+}
+.work-intro-cluster { margin-bottom: 24px; }
+.work-intro-photo {
+  width: clamp(70px, 6.5vw, 100px);
+  height: clamp(90px, 12vh, 130px);
+  border: 1px solid #cbc8c1;
+  box-shadow: 0 8px 18px rgb(14 14 12 / 9%);
+}
+.work-intro-heading {
+  font-size: clamp(48px, 7.2vw, 96px);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  word-spacing: .04em;
+}
+.work-intro-sub { max-width: 620px; margin-top: 20px; }
+@media (max-width: 860px) {
+  .work-intro-bg-wrap { margin-bottom: 0; }
+  .work-intro { position: relative; height: auto; min-height: 0; padding: 56px 24px; overflow: visible; }
+  .work-intro-spacer { display: none; }
+  .work-intro-heading { font-size: clamp(44px, 8vw, 64px); }
+}
+
+/* Navigation refinement: a lighter surface and quiet location cues. */
+.nav-pill { box-shadow: 0 4px 16px oklch(20% 0.03 260 / .055); }
+.nav-link--resume:hover { box-shadow: 0 4px 12px oklch(33% 0.13 35 / .14); }
+.nav-link[aria-current="location"], .mobile-menu a[aria-current="location"] {
+  color: var(--brand-dark);
+  background: var(--brand-tint);
+}
+.nav:focus-within { transform: translateY(0); }
+.nav a:focus-visible, .menu-btn:focus-visible { outline: 2px solid var(--brand-dark); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .nav { transition: none; }
+}
+
+/* Resize only the portrait's visual box, preserving all text/grid positions. */
+@media (min-width: 861px) {
+  .hero-portrait {
+    transform: translateY(var(--portrait-align-y, 0px)) scale(.82);
+    transform-origin: bottom right;
+  }
+}
+
+/* Selected handwritten-note hero accent; decorative layers never affect layout. */
+.hero-handwritten {
+  position: absolute;
+  top: 27%;
+  right: 9%;
+  width: 27%;
+  margin: 0;
+  font-family: 'La Belle Aurore', cursive;
+  font-size: clamp(22px, 2.2vw, 34px);
+  font-weight: 400;
+  line-height: 1.4;
+  color: #785951;
+  transform: rotate(-7deg);
+  opacity: .8;
+  pointer-events: none;
+}
+.hero-handwritten-arrow { display: block; margin-left: 55%; width: 75px; height: 66px; color: #967e6b; }
+.hero-floral-sprig {
+  position: absolute;
+  right: 4%;
+  bottom: calc(24px - var(--portrait-align-y, 0px));
+  width: clamp(55px, 6vw, 85px);
+  height: auto;
+  transform: rotate(12deg);
+  opacity: .72;
+  pointer-events: none;
+}
+@media (max-width: 860px) {
+  .hero-handwritten, .hero-floral-sprig { display: none; }
+}
+
+/* Refined footer: clear contact row, quieter flowers, protected utility strip. */
+.contact-panel { min-height: 0; padding: 48px 0 28px; }
+.contact-inner { display: block; }
+.ftr-top { display: block; }
+.ftr-heading { gap: 18px; }
+.ftr-eyebrow { font-size: clamp(20px, 1.8vw, 28px); line-height: 1.3; }
+.ftr-headline { font-size: clamp(48px, 6vw, 76px); line-height: 1.05; letter-spacing: -.025em; }
+.ftr-support { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ftr-ink-soft); }
+.ftr-contact-row {
+  position: relative; z-index: 2;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+  gap: 24px; padding: 32px 0 30px; border-bottom: 1px solid rgb(255 255 232 / .16);
+}
+.ftr-email { display: inline-flex; gap: 12px; align-items: center; font-size: clamp(18px, 1.8vw, 24px); line-height: 1.5; border-bottom: 1px solid rgb(255 255 232 / .45); padding-bottom: 4px; }
+.ftr-socials { gap: 24px; }
+.ftr-social-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; }
+.ftr-bottom { position: relative; isolation: isolate; min-height: 340px; padding: 24px 0 120px; align-items: center; justify-content: flex-end; overflow: hidden; }
+.ftr-wordmark { position: relative; z-index: 1; font-size: clamp(140px, 21vw, 280px); line-height: 1; letter-spacing: -.04em; }
+.ftr-bottom .footer-flowers { z-index: 0; opacity: .72; }
+.ftr-utility { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 22px; border-top: 1px solid rgb(255 255 232 / .13); background: #330703; }
+.ftr-credit { font-size: 13px; line-height: 1.5; }
+.ftr-back-top { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; font-size: 13px; }
+.ftr-email:hover, .ftr-social-link:hover, .ftr-back-top:hover { opacity: .78; }
+.contact-panel a:focus-visible { outline: 2px solid var(--ftr-ink); outline-offset: 5px; }
+@media (max-width: 860px) {
+  .contact-panel { padding: 36px 0 22px; }
+  .ftr-contact-row { align-items: flex-start; flex-direction: column; gap: 16px; padding-top: 24px; }
+  .ftr-bottom { min-height: 260px; padding: 20px 0 95px; }
+  .ftr-wordmark { font-size: clamp(110px, 27vw, 200px); }
+  .ftr-support { font-size: 14px; }
+  .ftr-credit, .ftr-back-top { font-size: 12px; }
+}
+
+/* Give the primary email action a quiet outlined treatment. */
+.ftr-email {
+  border: 1px solid rgb(255 255 232 / .55);
+  border-radius: 999px;
+  background: transparent;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  min-height: 48px;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease;
+}
+.ftr-email:hover {
+  opacity: 1;
+  background: rgb(255 255 232 / .07);
+  border-color: var(--ftr-ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ftr-email { transition: none; }
+}
+
+/* Resume shares the email action's sizing and outlined pill shape. */
+.nav-link--resume {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid oklch(33% .13 35 / .55);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--brand-dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: background .2s ease, border-color .2s ease;
+}
+.nav-link--resume:hover {
+  background: oklch(33% .13 35 / .07);
+  border-color: var(--brand-dark);
+  color: var(--brand-dark);
+  box-shadow: none;
+  transform: none;
+}
+.mobile-menu a[href="assets/resume.pdf"] {
+  align-self: flex-start;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid oklch(33% .13 35 / .55);
+  border-radius: 999px;
+  color: var(--brand-dark);
+  font-size: 16px;
+  line-height: 1.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-link--resume { transition: none; }
+}
+
+/* Resume is the primary navigation action. */
+.nav-link--resume,
+.mobile-menu a[href="assets/resume.pdf"] {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: var(--bg);
+}
+.nav-link--resume:hover,
+.mobile-menu a[href="assets/resume.pdf"]:hover {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: var(--bg);
+  box-shadow: 0 3px 10px oklch(33% .13 35 / .15);
+}
+
+/* Selected-work ribbon uses the same mockups as the project cards. */
+.work-intro-cluster {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: min(480px, 100%);
+  margin-bottom: 28px;
+}
+.work-intro-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid #d2cec5;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgb(14 14 12 / .04);
+  transform: none;
+  margin: 0;
+}
+@media (max-width: 540px) {
+  .work-intro-cluster { gap: 8px; }
+  .work-intro-photo { border-radius: 6px; }
+}
+
+/* Shared geometry keeps selected navigation items aligned with Resume. */
+.nav-links .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.nav-links .nav-link--resume { border-color: var(--brand-dark); }
+.nav-links .nav-link:hover { transform: none; }
+
+/* Project actions: consistent pill geometry with a visible hover response. */
+.work-card-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid #c5c2bb;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--brand-dark);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.work-card-tag span { display: inline-block; transition: transform .2s ease; }
+.work-card-tag:hover, .work-card-tag:focus-visible {
+  background: var(--brand-tint);
+  border-color: var(--brand-dark);
+  transform: translateY(-2px);
+}
+.work-card-tag:hover span, .work-card-tag:focus-visible span { transform: translate(2px, -2px); }
+/* An in-image arrow provides the affordance without a large cursor label. */
+.work-card-media { position: relative; }
+.work-card-media::after {
+  content: '↗';
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #c5c2bb;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--brand-dark);
+  font: 20px/1 var(--font-body);
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.work-card-media:hover::after, .work-card-media:focus-visible::after { opacity: 1; transform: none; }
+@media (hover: none) { .work-card-media::after { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .work-card-tag, .work-card-tag span, .work-card-media::after { transition: none; }
+  .work-card-tag:hover, .work-card-tag:focus-visible,
+  .work-card-tag:hover span, .work-card-tag:focus-visible span { transform: none; }
+}
+
+/* Filled project actions. */
+.work-card-tag {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: var(--bg);
+}
+.work-card-tag:hover, .work-card-tag:focus-visible {
+  background: oklch(39% .13 35);
+  border-color: oklch(39% .13 35);
+  color: var(--bg);
+}
+
+/* Tertiary project actions: quiet at rest, clear on hover and focus. */
+.work-card-tag {
+  min-height: 44px;
+  padding: 8px 12px;
+  margin-left: -12px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--brand-dark);
+  box-shadow: none;
+  text-decoration: none;
+}
+.work-card-tag:hover, .work-card-tag:focus-visible {
+  background: oklch(33% .13 35 / .07);
+  border-color: transparent;
+  color: var(--brand-dark);
+  transform: none;
+  box-shadow: none;
+}
+.work-card-tag:hover span, .work-card-tag:focus-visible span {
+  transform: translate(3px, -3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-card-tag:hover span, .work-card-tag:focus-visible span { transform: none; }
+}
+
+/* A small process illustration replaces the former thumbnail ribbon. */
+.work-process-sketch {
+  display: block;
+  flex-shrink: 0;
+  width: min(420px, 85%);
+  height: auto;
+  margin: 0 0 20px;
+  color: #9a9082;
+}
+.work-process-sketch rect, .work-process-sketch path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.work-process-sketch text {
+  fill: currentColor;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  font-weight: 500;
+}
+@media (max-width: 540px) {
+  .work-process-sketch { width: min(340px, 100%); margin-bottom: 16px; }
+}
+
+/* Neutral navigation selection replaces the peach tint. */
+.nav-link[aria-current="location"],
+.mobile-menu a[aria-current="location"],
+.nav-links .nav-link:not(.nav-link--resume):hover {
+  background: #e9e6df;
+  color: var(--brand-dark);
+}
+
+/* Native vector process illustrations, composed as independent editable steps. */
+.work-process-illustration {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) 28px minmax(0, 1fr);
+  align-items: center;
+  width: min(620px, 100%);
+  margin: 0 0 24px;
+  flex-shrink: 0;
+}
+.work-process-step { margin: 0; min-width: 0; }
+.work-process-step svg { display: block; width: 100%; height: auto; }
+.work-process-step figcaption {
+  margin-top: 5px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.25;
+}
+.work-process-arrow { display: block; width: 38px; margin: -24px -5px 0; }
+.work-process-arrow svg { display: block; width: 100%; height: auto; }
+@media (max-width: 540px) {
+  .work-process-illustration { grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr) 18px minmax(0, 1fr); margin-bottom: 22px; }
+  .work-process-step figcaption { font-size: 17px; }
+  .work-process-arrow { width: 24px; margin: -20px -3px 0; }
+}
+
+/* Anchor the handwritten note just above its portrait. */
+@media (min-width: 861px) {
+  .hero-handwritten {
+    top: var(--handwritten-top, 45%);
+    right: 7%;
+    width: clamp(200px, 22vw, 280px);
+  }
+}
+
+/* Dashed looping arrow selected for the handwritten portrait note. */
+.hero-handwritten-arrow {
+  width: 84px;
+  height: 84px;
+  margin-left: 48%;
+  color: #785951;
+}
+
+/* Attach the arrow to the final punctuation rather than a separate row. */
+.hero-handwritten { padding-bottom: 84px; }
+.hero-handwritten-last-line { position: relative; display: inline-block; white-space: nowrap; }
+.hero-handwritten-last-line .hero-handwritten-arrow {
+  position: absolute;
+  left: calc(100% - 7px);
+  top: calc(.8em - 10px);
+  width: 100px;
+  height: 110px;
+  margin: 0;
+}
