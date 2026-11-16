@@ -74,8 +74,13 @@
       </figure>
 <div class="hero-handwritten">Still curious.<br><span class="hero-handwritten-last-line">Still learning.
 <svg class="hero-handwritten-arrow" viewBox="-20 -40 440 560" preserveAspectRatio="xMinYMin meet" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="arrow-remove-paper" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 -1.4 0 0 1.36"/>
+    </filter>
+  </defs>
   <g transform="matrix(0 1 1 0 -166 -225)">
-    <image href="assets/hero/handwritten-arrow-textured.png" width="818" height="642"/>
+    <image href="assets/hero/handwritten-arrow-textured.png" width="818" height="642" filter="url(#arrow-remove-paper)"/>
   </g>
 </svg></span>
 </div>
