@@ -1866,3 +1866,9 @@ body.cursor-active button {
   left: calc(100% - 2.5px);
   top: calc(.8em - 21px);
 }
+
+/* The artwork tail is normalized to SVG (0,0): 27.27px across, 4.55px down. */
+.hero-handwritten-last-line .hero-handwritten-arrow {
+  left: calc(100% - 21.27px);
+  top: calc(.8em - 4.55px);
+}
