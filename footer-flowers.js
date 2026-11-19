@@ -20,6 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const layer = document.getElementById('footerFlowers');
   if (!footer || !layer || typeof Matter === 'undefined') return;
 
+  // Start at the footer ceiling, but retain the existing landing line
+  // above the copyright strip after moving the layer outside .ftr-bottom.
+  function fitFlowerLayer() {
+    const landing = footer.querySelector('.ftr-bottom');
+    if (!landing) return;
+    const footerRect = footer.getBoundingClientRect();
+    const landingRect = landing.getBoundingClientRect();
+    layer.style.bottom = `${Math.max(0, footerRect.bottom - landingRect.bottom)}px`;
+  }
+  fitFlowerLayer();
+  window.addEventListener('resize', fitFlowerLayer, { passive: true });
+  document.fonts.ready.then(fitFlowerLayer);
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = window.matchMedia('(max-width: 860px)').matches;
 
@@ -164,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const flowerBodies = [];
 
   function layerSize() {
+    fitFlowerLayer();
     const r = layer.getBoundingClientRect();
     return { width: r.width, height: r.height, rect: r };
   }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Fuggles&family=La+Belle+Aurore&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Fuggles&family=La+Belle+Aurore&display=swap');
 
 /* --- Design tokens: editorial serif portfolio. Big Fraunces display type
    carries the hero, Inter carries everything functional. One warm
@@ -904,8 +904,9 @@ section { padding: 112px 0; }
 }
 
 .about-copy p {
-  font-family: var(--font-display);
-  font-size: clamp(20px, 2.4vw, 32px);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 28px;
   line-height: 1.45;
   color: var(--ink);
   max-width: 34ch;
@@ -954,59 +955,6 @@ section { padding: 112px 0; }
 .experience-intro { margin-bottom: 72px; }
 
 .experience-heading-accent { color: #680900; }
-
-.xp-list {
-  display: flex;
-  flex-direction: column;
-  max-width: 640px;
-}
-
-.xp-row {
-  display: flex;
-  align-items: baseline;
-  gap: 24px;
-  padding: 28px 0;
-  border-top: 1px solid var(--line);
-}
-
-.xp-row:first-child { border-top: none; padding-top: 0; }
-.xp-row:last-child { padding-bottom: 0; }
-
-.xp-index {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(22px, 2.4vw, 32px);
-  color: var(--ink-soft);
-  flex-shrink: 0;
-  width: 2ch;
-}
-
-.xp-row-body { display: flex; flex-direction: column; gap: 6px; }
-
-.xp-co {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink-soft);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--line);
-  width: fit-content;
-}
-
-.xp-role {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(20px, 2.4vw, 28px);
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-
-.xp-date {
-  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: var(--ink-soft);
-}
 
 /* --- Contact / Footer panel: full-bleed colored section (per Figma node
    713:487/713:488) — no card, no rounded corners, no white margin; the
@@ -1545,7 +1493,7 @@ body.cursor-active button {
 .ftr-social-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; }
 .ftr-bottom { position: relative; isolation: isolate; min-height: 340px; padding: 24px 0 120px; align-items: center; justify-content: flex-end; overflow: hidden; }
 .ftr-wordmark { position: relative; z-index: 1; font-size: clamp(140px, 21vw, 280px); line-height: 1; letter-spacing: -.04em; }
-.ftr-bottom .footer-flowers { z-index: 0; opacity: .72; }
+.contact-panel > .footer-flowers { z-index: 1; opacity: .72; }
 .ftr-utility { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 22px; border-top: 1px solid rgb(255 255 232 / .13); background: #330703; }
 .ftr-credit { font-size: 13px; line-height: 1.5; }
 .ftr-back-top { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; font-size: 13px; }
@@ -1879,4 +1827,123 @@ body.cursor-active button {
   height: 140px;
   left: calc(100% + 1px);
   top: calc(.8em - 10px);
+}
+
+/* Figma-inspired journey: alternating entries around one quiet vertical spine. */
+.experience.experience-timeline { min-height: 0; display: block; background: #eeebe1; padding: clamp(64px, 7vw, 112px) 0 56px; }
+.journey-inner { max-width: 1440px; margin-inline: auto; }
+.journey-header { display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-bottom: 64px; }
+.journey-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: #77766e; margin-bottom: 24px; }
+.journey-title { font-family: var(--font-display); font-weight: 500; font-size: clamp(34px, 3.7vw, 58px); letter-spacing: -.035em; line-height: 1.12; }
+.journey-note { font-family: 'La Belle Aurore', cursive; color: #9a7a70; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.5; font-weight: 400; transform: rotate(-4deg); }
+.journey-header > .journey-note { margin-right: 7%; }
+.journey-track { list-style: none; position: relative; padding: 0; margin: 0; }
+.journey-track::before { content: ''; position: absolute; top: 5px; bottom: 12px; left: 50%; width: 1px; background: #bbc0bb; }
+.journey-step { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 225px; padding-bottom: 44px; }
+.journey-step::before { content: ''; position: absolute; left: calc(50% - 4px); top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #7c8b8e; border: 2px solid #eeebe1; box-sizing: content-box; transform: translateX(-2px); }
+.journey-entry { padding: 0 clamp(36px, 5vw, 80px) 0 clamp(16px, 2vw, 40px); max-width: 540px; }
+.journey-step:nth-child(even) .journey-entry { grid-column: 2; padding: 0 clamp(16px, 2vw, 40px) 0 clamp(36px, 5vw, 80px); }
+.journey-label { font-size: 10px; line-height: 1.6; text-transform: uppercase; letter-spacing: .055em; color: #73776f; margin-bottom: 18px; }
+.journey-logo { display: block; width: 135px; height: 32px; object-fit: contain; object-position: left center; margin-bottom: 14px; }
+.journey-logo--bongo { filter: brightness(0); }
+.journey-role { font-family: var(--font-display); font-size: clamp(24px, 2.2vw, 34px); font-weight: 500; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 14px; }
+.journey-description { font-family: var(--font-body); font-size: 14px; line-height: 1.75; color: #4e554e; max-width: 45ch; }
+.journey-closing { width: fit-content; margin: 16px 5% 0 auto; font-size: 22px; }
+@media (max-width: 860px) {
+  .experience.experience-timeline { padding: 64px 0 48px; }
+  .journey-header { align-items: flex-start; flex-direction: column; gap: 24px; margin-bottom: 44px; }
+  .journey-header > .journey-note { align-self: flex-end; margin-right: 8px; }
+  .journey-eyebrow { margin-bottom: 18px; }
+  .journey-title { font-size: clamp(30px, 5.8vw, 46px); }
+  .journey-track::before { left: 5px; bottom: 10px; }
+  .journey-step { display: block; min-height: 0; padding: 0 0 44px 34px; }
+  .journey-step::before { left: 1px; }
+  .journey-entry, .journey-step:nth-child(even) .journey-entry { padding: 0; max-width: 520px; }
+  .journey-role { font-size: 27px; }
+  .journey-description { font-size: 14px; }
+  .journey-closing { margin-top: 0; }
+}
+
+/* Scroll-following journey. Only entry content moves; the spine and dots stay fixed. */
+.journey-track::after { content: ''; position: absolute; top: 5px; bottom: 12px; left: 50%; width: 1px; background: #986b68; transform: scaleY(var(--journey-progress, 0)); transform-origin: top; pointer-events: none; }
+.journey-step { z-index: 1; }
+.journey-step.is-reached::before { background: #986b68; }
+.journey-track.is-animated .journey-entry { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.65,.3,1); }
+.journey-track.is-animated .journey-step.is-revealed .journey-entry { opacity: 1; transform: none; }
+.journey-step.is-pulsing::before { animation: journey-milestone .7s ease-out; }
+@keyframes journey-milestone { 0% { box-shadow: 0 0 0 0 rgb(152 107 104 / .25); } 100% { box-shadow: 0 0 0 12px rgb(152 107 104 / 0); } }
+@media (max-width: 860px) { .journey-track::after { left: 5px; bottom: 10px; } }
+@media (prefers-reduced-motion: reduce) {
+  .journey-track.is-animated .journey-entry { opacity: 1; transform: none; transition: none; }
+  .journey-step.is-pulsing::before { animation: none; }
+}
+
+/* Custom vector wordmark: flower, brushstroke, and outlined serif lettering. */
+.logo--floral { display: inline-flex; align-items: center; flex: 0 0 auto; line-height: 1; }
+.logo--floral img { display: block; width: 189px; height: 63px; object-fit: contain; }
+@media (max-width: 860px) { .logo--floral img { width: 156px; height: 52px; } }
+
+/* Breathing room between the About copy and the experience timeline. */
+.about { padding-bottom: clamp(128px, 11vw, 184px); }
+@media (max-width: 860px) { .about { padding-bottom: 104px; } }
+
+/* About collage: reference-measured 408 × 230 composition, scaled as one unit.
+   Photo assets belong to Rimi; decorative string and grid are resolution-independent. */
+.about-scrapbook { position: relative; width: 100%; max-width: 640px; aspect-ratio: 408 / 230; isolation: isolate; container-type: inline-size; }
+.about-scrapbook-grid { position: absolute; left: 8.701%; top: 18.261%; width: 82.353%; height: 52.174%; pointer-events: none; }
+.about-scrapbook-string { position: absolute; left: 8.701%; top: 2.174%; width: 85.539%; height: 24.783%; overflow: visible; pointer-events: none; }
+.about-snapshot { position: absolute; width: 23.529%; height: 50.435%; margin: 0; padding: 4px; border-radius: 12px; background: #fff; box-shadow: -7px 9px 15px 2px rgb(0 0 0 / .15); overflow: hidden; }
+.about-snapshot img { display: block; width: 100%; height: 100%; border-radius: 8px; object-fit: cover; }
+.about-snapshot--river { left: 12.990%; top: 24.783%; transform: rotate(-7deg); z-index: 2; }
+.about-snapshot--river img { object-position: 55% 60%; }
+.about-snapshot--sky { left: 36.235%; top: 30.465%; transform: rotate(12deg); z-index: 3; }
+.about-snapshot--sky img { object-position: 50% 65%; }
+.about-snapshot--crochet { left: 66.667%; top: 18.696%; transform: rotate(-16deg); z-index: 2; }
+.about-snapshot--crochet img { object-position: 48% 50%; }
+.about-photo-tape { position: absolute; width: .9804%; height: 4.783%; background: #fd1e1f; z-index: 4; pointer-events: none; }
+.about-photo-tape--river { left: 20.954%; top: 22.174%; transform: rotate(21deg); }
+.about-photo-tape--sky { left: 40.317%; top: 24.348%; transform: rotate(-7deg); }
+.about-photo-tape--crochet { left: 73.650%; top: 16.087%; transform: rotate(-16deg); }
+@supports (width: 1cqw) {
+  .about-snapshot { padding: .9804cqw; border-radius: 2.941cqw; box-shadow: -1.716cqw 2.206cqw 3.676cqw .490cqw rgb(0 0 0 / .15); }
+  .about-snapshot img { border-radius: 1.961cqw; }
+}
+@media (max-width: 860px) { .about-scrapbook { max-width: 560px; margin-inline: auto; } }
+
+/* Each photo and its tape travel together along the string. */
+.about-photo-hanger { position: absolute; inset: 0; pointer-events: none; transform: translate(var(--photo-x, 0px), var(--photo-y, 0px)); z-index: 2; }
+.about-photo-hanger[data-photo="sky"] { z-index: 3; }
+.about-photo-hanger:focus-within, .about-photo-hanger.is-dragging { z-index: 5; }
+.about-photo-mount { position: absolute; width: 23.529%; height: 50.435%; }
+.about-photo-mount--river { left: 12.990%; top: 24.783%; transform: rotate(-7deg); }
+.about-photo-mount--sky { left: 36.235%; top: 30.465%; transform: rotate(12deg); }
+.about-photo-mount--crochet { left: 66.667%; top: 18.696%; transform: rotate(-16deg); }
+.about-photo-mount > .about-snapshot { left: 0; top: 0; width: 100%; height: 100%; transform: none; transform-origin: 35% 0%; pointer-events: auto; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.about-photo-mount > .about-snapshot img { pointer-events: none; -webkit-user-drag: none; }
+.about-photo-hanger.is-dragging .about-snapshot { cursor: grabbing; }
+.about-photo-mount > .about-snapshot:focus-visible { outline: 2px solid #680900; outline-offset: 5px; }
+.about-rope-help { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* A second string gives the new photographs space without shrinking the first row. */
+.about-scrapbook + .about-scrapbook { margin-top: 16px; }
+.about-scrapbook--more .about-snapshot img { object-position: 50% 50%; }
+
+/* All six memories hang from the original string, with a little overlap. */
+.about-scrapbook--six .about-photo-mount { left: var(--mount-left); top: var(--mount-top); width: 20%; height: 43%; transform: rotate(var(--mount-angle)); }
+.about-scrapbook--six .about-photo-tape { left: var(--pin-left); top: var(--pin-top); transform: rotate(var(--mount-angle)); }
+.about-snapshot--minaret img { object-position: 50% 65%; }
+.about-snapshot--countryside img { object-position: 50% 50%; }
+.about-snapshot--lakeside img { object-position: 50% 48%; }
+
+/* About title matches the Selected Work title across desktop and mobile. */
+.about-intro .section-heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(48px, 7.2vw, 96px);
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  word-spacing: .04em;
+}
+@media (max-width: 860px) {
+  .about-intro .section-heading { font-size: clamp(44px, 8vw, 64px); }
 }

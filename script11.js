@@ -307,3 +307,220 @@ document.addEventListener('DOMContentLoaded', () => {
   document.fonts.ready.then(scheduleLocation);
   scheduleLocation();
 })();
+
+// Draw the journey spine to the reading position; pulse each milestone only once.
+(() => {
+  const track = document.querySelector('.journey-track');
+  if (!track) return;
+  const steps = [...track.querySelectorAll('.journey-step')];
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pulsed = new WeakSet();
+  let queued = false;
+  track.classList.add('is-animated');
+  function updateJourney() {
+    queued = false;
+    const rect = track.getBoundingClientRect();
+    const bottomInset = innerWidth <= 860 ? 10 : 12;
+    const length = Math.max(1, rect.height - 5 - bottomInset);
+    const readingY = innerHeight * .68;
+    const progress = reduced.matches ? 1 : Math.max(0, Math.min(1, (readingY - rect.top - 5) / length));
+    track.style.setProperty('--journey-progress', String(progress));
+    steps.forEach(step => {
+      const reached = reduced.matches || (progress > 0 && readingY >= rect.top + step.offsetTop + 10);
+      step.classList.toggle('is-reached', reached);
+      if (reached) {
+        step.classList.add('is-revealed');
+        if (!reduced.matches && !pulsed.has(step)) {
+          pulsed.add(step);
+          // Off-screen milestones are filled quietly when arriving via a deep link.
+          const dotY = rect.top + step.offsetTop + 10;
+          if (dotY >= 0 && dotY <= innerHeight) step.classList.add('is-pulsing');
+        }
+      }
+      if (reduced.matches) step.classList.remove('is-pulsing');
+    });
+  }
+  function scheduleJourney() {
+    if (!queued) { queued = true; requestAnimationFrame(updateJourney); }
+  }
+  steps.forEach(step => step.addEventListener('animationend', event => {
+    if (event.animationName === 'journey-milestone') step.classList.remove('is-pulsing');
+  }));
+  window.addEventListener('scroll', scheduleJourney, { passive: true });
+  window.addEventListener('resize', scheduleJourney);
+  window.addEventListener('load', scheduleJourney);
+  reduced.addEventListener('change', scheduleJourney);
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(scheduleJourney).observe(track);
+  document.fonts.ready.then(scheduleJourney);
+  updateJourney();
+})();
+
+// Photos slide along the string; their frames sway independently of their mounts.
+(() => {
+  document.querySelectorAll('.about-scrapbook').forEach((board, boardIndex) => {
+  const rope = board.querySelector('.about-scrapbook-string path');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+  const configs = { river: .21444, sky: .40807, crochet: .74140 };
+  let visible = false, breezeTimer;
+  const items = [...board.querySelectorAll('.about-photo-hanger')].map(hanger => ({
+    hanger, photo: hanger.querySelector('.about-snapshot'), x: 0, motion: null, drag: null, glide: null,
+    pin: Number(hanger.dataset.pin) || configs[hanger.dataset.photo],
+  }));
+  function sway(item) {
+    if (reduced.matches || item.drag || item.glide || !visible) return;
+    // Avoid snapping back to rest if a hover arrives during an existing breeze.
+    if (item.motion?.playState === 'running') return;
+    const frames = Array.from({ length: 121 }, (_, index) => {
+      const t = index / 120;
+      const envelope = Math.sin(Math.PI * t) ** 2 * Math.exp(-.8 * t);
+      const angle = 2.2 * envelope * Math.sin(4 * Math.PI * t);
+      return { transform: `rotate(${angle}deg)`, offset: t };
+    });
+    item.motion = item.photo.animate(frames, { duration: 4600, easing: 'linear' });
+  }
+  function ropeY(x, width, height) {
+    const svgLeft = width * .08701, svgWidth = width * .85539;
+    const targetX = clamp((x - svgLeft) / svgWidth * 349 - 1, 0, 347);
+    let low = 0, high = rope.getTotalLength();
+    for (let i = 0; i < 18; i++) {
+      const length = (low + high) / 2;
+      if (rope.getPointAtLength(length).x < targetX) low = length; else high = length;
+    }
+    return (rope.getPointAtLength((low + high) / 2).y + 1) / 57 * height * .24783;
+  }
+  function place(item, requestedX) {
+    const bounds = board.getBoundingClientRect();
+    const frame = item.hanger.querySelector('.about-photo-mount').getBoundingClientRect();
+    // Undo the previous translation to keep bounds stable during dragging.
+    const left = frame.left - bounds.left - item.x;
+    const right = frame.right - bounds.left - item.x;
+    const x = clamp(requestedX, 8 - left, bounds.width - 8 - right);
+    const y = ropeY(item.pin * bounds.width + x, bounds.width, bounds.height)
+      - ropeY(item.pin * bounds.width, bounds.width, bounds.height);
+    item.x = x;
+    item.hanger.style.setProperty('--photo-x', `${x}px`);
+    item.hanger.style.setProperty('--photo-y', `${y}px`);
+  }
+  function stopGlide(item) {
+    if (item.glide) cancelAnimationFrame(item.glide.frame);
+    item.glide = null;
+  }
+  function glide(item, velocity) {
+    stopGlide(item);
+    if (reduced.matches || !visible || document.hidden || Math.abs(velocity) < .025) { sway(item); return; }
+    const bounds = board.getBoundingClientRect();
+    const frame = item.hanger.querySelector('.about-photo-mount').getBoundingClientRect();
+    const low = 8 - (frame.left - bounds.left - item.x);
+    const high = bounds.width - 8 - (frame.right - bounds.left - item.x);
+    const speed = clamp(velocity, -1.1, 1.1);
+    const target = clamp(item.x + speed / .006, low, high);
+    const distance = target - item.x;
+    if (Math.abs(distance) < .5) { sway(item); return; }
+    const state = { start: item.x, target, time: performance.now(), duration: clamp(3 * Math.abs(distance / speed), 450, 1600), frame: null };
+    item.glide = state;
+    function tick(now) {
+      if (item.glide !== state) return;
+      const t = clamp((now - state.time) / state.duration, 0, 1);
+      // Ease to zero speed at the destination, including either end stop.
+      const eased = 1 - (1 - t) ** 3;
+      place(item, state.start + distance * eased);
+      if (t >= 1) { item.glide = null; sway(item); return; }
+      state.frame = requestAnimationFrame(tick);
+    }
+    state.frame = requestAnimationFrame(tick);
+  }
+  items.forEach(item => {
+    const photo = item.photo;
+    photo.addEventListener('pointerenter', event => {
+      if (fine.matches && event.pointerType !== 'touch') sway(item);
+    });
+    photo.addEventListener('focus', () => sway(item));
+    photo.addEventListener('pointerdown', event => {
+      if ((event.pointerType === 'mouse' && event.button !== 0) || item.drag) return;
+      stopGlide(item);
+      item.motion?.cancel();
+      item.drag = { id: event.pointerId, startX: event.clientX, startY: event.clientY, origin: item.x, moving: false, lastTime: event.timeStamp, velocity: 0 };
+      photo.setPointerCapture(event.pointerId);
+    });
+    photo.addEventListener('pointermove', event => {
+      const drag = item.drag;
+      if (!drag || event.pointerId !== drag.id) return;
+      const dx = event.clientX - drag.startX, dy = event.clientY - drag.startY;
+      if (!drag.moving) {
+        if (event.pointerType === 'touch' && Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 6) {
+          item.drag = null; photo.releasePointerCapture(event.pointerId); return;
+        }
+        if (Math.abs(dx) < 4) return;
+        drag.moving = true; item.hanger.classList.add('is-dragging');
+      }
+      if (event.cancelable) event.preventDefault();
+      const previousX = item.x;
+      place(item, drag.origin + dx);
+      const dt = Math.max(1, event.timeStamp - drag.lastTime);
+      const speed = (item.x - previousX) / dt;
+      drag.velocity = dt > 100 ? speed : drag.velocity * .45 + speed * .55;
+      drag.lastTime = event.timeStamp;
+    });
+    function finish(event) {
+      if (!item.drag || event.pointerId !== item.drag.id) return;
+      const drag = item.drag;
+      const paused = Math.max(0, event.timeStamp - drag.lastTime);
+      const velocity = drag.velocity * Math.exp(-paused / 80);
+      item.drag = null; item.hanger.classList.remove('is-dragging');
+      if (photo.hasPointerCapture(event.pointerId)) photo.releasePointerCapture(event.pointerId);
+      if (event.type === 'pointerup' && drag.moving) glide(item, velocity);
+      else sway(item);
+    }
+    photo.addEventListener('pointerup', finish);
+    photo.addEventListener('pointercancel', finish);
+    photo.addEventListener('lostpointercapture', finish);
+    photo.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'Enter', ' '].includes(event.key)) return;
+      event.preventDefault(); stopGlide(item); item.motion?.cancel();
+      if (event.key === 'Home') place(item, 0);
+      else if (event.key.startsWith('Arrow')) {
+        const step = board.getBoundingClientRect().width * (event.shiftKey ? .06 : .02);
+        place(item, item.x + (event.key === 'ArrowRight' ? step : -step));
+      }
+      sway(item);
+    });
+  });
+  // Retain the occasional middle-photo breeze, only while the collage is visible.
+  function scheduleBreeze(delay = 13000) {
+    clearTimeout(breezeTimer);
+    if (!visible || reduced.matches || document.hidden) return;
+    breezeTimer = setTimeout(() => {
+      const middle = items.find(item => item.hanger.dataset.photo === 'sky');
+      if (middle && !board.querySelector('.is-dragging')) sway(middle);
+      scheduleBreeze();
+    }, delay);
+  }
+  new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    if (!visible) items.forEach(stopGlide);
+    scheduleBreeze(1200 + boardIndex * 2600);
+  }, { threshold: .25 }).observe(board);
+  reduced.addEventListener('change', () => {
+    if (reduced.matches) items.forEach(item => { stopGlide(item); item.motion?.cancel(); });
+    scheduleBreeze();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) items.forEach(item => { stopGlide(item); item.motion?.cancel(); });
+    scheduleBreeze();
+  });
+  let previousWidth = board.getBoundingClientRect().width;
+  new ResizeObserver(() => {
+    const width = board.getBoundingClientRect().width;
+    if (width === previousWidth) return;
+    items.forEach(stopGlide);
+    const ratio = width / (previousWidth || width);
+    // Reset existing translations before recomputing their resized boundaries.
+    const positions = items.map(item => item.x * ratio);
+    items.forEach(item => { item.x = 0; item.hanger.style.setProperty('--photo-x', '0px'); item.hanger.style.setProperty('--photo-y', '0px'); });
+    items.forEach((item, index) => place(item, positions[index]));
+    previousWidth = width;
+  }).observe(board);
+  });
+})();

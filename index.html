@@ -7,12 +7,12 @@
   <meta name="description"
     content="Sadia Afrin Rimi - Associate UX Designer portfolio. Designing calm, clear tools for messy internal systems.">
   <title>Sadia Afrin Rimi | Portfolio</title>
-  <link rel="stylesheet" href="style11.css?v=20261116-figma-arrow">
-  <script src="script11.js" defer></script>
+  <link rel="stylesheet" href="style11.css?v=20261118-about-title-match">
+  <script src="script11.js?v=20261118-rope-momentum" defer></script>
   <script src="hero-portrait.js" defer></script>
   <!-- Matter.js: physics for the footer flower playground (footer-flowers.js). -->
   <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js" defer></script>
-  <script src="footer-flowers.js" defer></script>
+  <script src="footer-flowers.js?v=20261116-footer-drop-origin" defer></script>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
 
   <!-- Header / Navigation -->
   <header class="nav">
-    <a href="#" class="logo">Rimi<span class="logo-dot">.</span></a>
+    <a href="#" class="logo logo--floral" aria-label="Rimi — back to top"><img src="assets/brand/rimi-floral-logo.svg?v=20261117-supplied" alt="Rimi" width="189" height="63"></a>
     <div class="nav-pill">
       <nav class="nav-links" aria-label="Primary">
         <a href="#work" class="nav-link">Work</a>
@@ -259,69 +259,87 @@
       </div>
       <div class="container about-inner">
         <div class="about-media fade-in">
-          <div class="about-photo-collage-frame">
-            <div class="about-photo-collage">
-              <div class="about-photo-main">
-                <img src="assets/about/about-photo-main.png" alt="A river with a small boat under a cloudy sky">
-              </div>
-              <span class="about-signature">Sadia Afrin<br>Rimi</span>
-              <div class="about-photo-row">
-                <div class="about-photo-portrait">
-                  <img src="assets/about/about-photo-portrait.png" alt="Small crocheted toy figures on a desk">
-                </div>
-                <div class="about-photo-small">
-                  <img src="assets/about/about-photo-small.png" alt="A cloud formation at dusk">
-                </div>
-              </div>
+          <div class="about-scrapbook about-scrapbook--six" role="group" aria-label="A few little moments from my world">
+            <svg class="about-scrapbook-grid" viewBox="0 0 336 120" fill="none" aria-hidden="true">
+              <defs><pattern id="about-photo-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" stroke="#e7e7e1" stroke-width="1"/></pattern></defs>
+              <rect x=".5" y=".5" width="335" height="119" rx="8" fill="url(#about-photo-grid)" stroke="#e7e7e1"/>
+            </svg>
+            <svg class="about-scrapbook-string" viewBox="-1 -1 349 57" fill="none" aria-hidden="true"><path d="M0 39.0857C141 80.9633 305.448 30.3598 347 0" stroke="#bdbdae" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 4"/></svg>
+            <div class="about-photo-hanger" data-photo="river" data-pin="0.13500" style="--mount-left:4.000%;--mount-top:22.561%;--mount-angle:-7deg;--pin-left:13.500%;--pin-top:20.061%">
+              <div class="about-photo-mount"><figure class="about-snapshot about-snapshot--river" tabindex="0" role="button" aria-label="Move photo: A river with a small boat under a cloudy sky" aria-description="Use Left or Right to move the photo; Home resets its position."><img src="assets/about/about-photo-main.png" alt="A river with a small boat under a cloudy sky" width="1897" height="1093" loading="lazy" decoding="async" draggable="false"></figure></div>
+              <span class="about-photo-tape" aria-hidden="true"></span>
+            </div>
+            <div class="about-photo-hanger" data-photo="minaret" data-pin="0.28000" style="--mount-left:18.500%;--mount-top:26.619%;--mount-angle:9deg;--pin-left:28.000%;--pin-top:24.119%">
+              <div class="about-photo-mount"><figure class="about-snapshot about-snapshot--minaret" tabindex="0" role="button" aria-label="Move photo: A brick minaret with a golden dome against a clear blue sky" aria-description="Use Left or Right to move the photo; Home resets its position."><img src="assets/about/about-minaret.jpeg" alt="A brick minaret with a golden dome against a clear blue sky" width="1530" height="2040" loading="lazy" decoding="async" draggable="false"></figure></div>
+              <span class="about-photo-tape" aria-hidden="true"></span>
+            </div>
+            <div class="about-photo-hanger" data-photo="sky" data-pin="0.42500" style="--mount-left:33.000%;--mount-top:27.151%;--mount-angle:-10deg;--pin-left:42.500%;--pin-top:24.651%">
+              <div class="about-photo-mount"><figure class="about-snapshot about-snapshot--sky" tabindex="0" role="button" aria-label="Move photo: A cloud formation at dusk" aria-description="Use Left or Right to move the photo; Home resets its position."><img src="assets/about/about-photo-small.png" alt="A cloud formation at dusk" width="1148" height="2040" loading="lazy" decoding="async" draggable="false"></figure></div>
+              <span class="about-photo-tape" aria-hidden="true"></span>
+            </div>
+            <div class="about-photo-hanger" data-photo="countryside" data-pin="0.57000" style="--mount-left:47.500%;--mount-top:24.721%;--mount-angle:12deg;--pin-left:57.000%;--pin-top:22.221%">
+              <div class="about-photo-mount"><figure class="about-snapshot about-snapshot--countryside" tabindex="0" role="button" aria-label="Move photo: Green fields and trees beneath distant hills" aria-description="Use Left or Right to move the photo; Home resets its position."><img src="assets/about/about-countryside.jpeg" alt="Green fields and trees beneath distant hills" width="2046" height="1013" loading="lazy" decoding="async" draggable="false"></figure></div>
+              <span class="about-photo-tape" aria-hidden="true"></span>
+            </div>
+            <div class="about-photo-hanger" data-photo="crochet" data-pin="0.71500" style="--mount-left:62.000%;--mount-top:19.490%;--mount-angle:-9deg;--pin-left:71.500%;--pin-top:16.990%">
+              <div class="about-photo-mount"><figure class="about-snapshot about-snapshot--crochet" tabindex="0" role="button" aria-label="Move photo: Small crocheted toy figures on a desk" aria-description="Use Left or Right to move the photo; Home resets its position."><img src="assets/about/about-photo-portrait.png" alt="Small crocheted toy figures on a desk" width="2040" height="1530" loading="lazy" decoding="async" draggable="false"></figure></div>
+              <span class="about-photo-tape" aria-hidden="true"></span>
+            </div>
+            <div class="about-photo-hanger" data-photo="lakeside" data-pin="0.86000" style="--mount-left:76.500%;--mount-top:10.940%;--mount-angle:-16deg;--pin-left:86.000%;--pin-top:8.440%">
+              <div class="about-photo-mount"><figure class="about-snapshot about-snapshot--lakeside" tabindex="0" role="button" aria-label="Move photo: A flower-covered lakeside gazebo reflected in the water" aria-description="Use Left or Right to move the photo; Home resets its position."><img src="assets/about/about-lakeside.jpeg" alt="A flower-covered lakeside gazebo reflected in the water" width="1198" height="1732" loading="lazy" decoding="async" draggable="false"></figure></div>
+              <span class="about-photo-tape" aria-hidden="true"></span>
             </div>
           </div>
+
         </div>
         <div class="about-text fade-in">
           <div class="about-copy">
-            <p>After <span class="badge badge--amber">2+ years</span> at BRAC IT and
-              <span class="badge badge--ink">countless Figma files</span>, I still get genuinely excited opening a
-              blank canvas.</p>
-            <p>I guide ideas from a rough sketch to a shipped product — research, flows, interface detail, all of it
-              — <span class="badge badge--brand">because good design isn't optional.</span></p>
-            <p>This is my corner of the internet for the internal tools that keep a whole organization running, and
-              the small interactions nobody notices until they're missing. Thanks for stopping by.</p>
+            <p>I'm Rimi!!!</p>
+            <p>I’m an Associate UX Designer at BRAC IT, where I started as an intern. Every project teaches me something new and makes me more curious about people and how they interact with technology.</p>
+            <p>I love exploring ideas and finding simple solutions to complex problems. For me, it’s the little details that make a big difference.</p>
+            <p>Outside of work, I love watching TV series, taking random pictures, admiring the sky, and capturing little moments I’d like to look back on someday.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Experience -->
-    <section id="experience" class="experience">
-      <div class="container experience-intro">
-        <h2 class="section-heading fade-in">Work <span class="experience-heading-accent">experience.</span></h2>
-      </div>
-      <div class="container experience-inner">
-        <div class="xp-list">
-          <div class="xp-row fade-in">
-            <span class="xp-index">01</span>
-            <div class="xp-row-body">
-              <span class="xp-co">BRAC IT</span>
-              <h3 class="xp-role">Associate UX Designer</h3>
-              <span class="xp-date">Nov 2024 — Present</span>
-            </div>
+    <section id="experience" class="experience experience-timeline" aria-labelledby="experience-title">
+      <div class="container journey-inner">
+        <header class="journey-header fade-in">
+          <div>
+            <p class="journey-eyebrow">My journey so far</p>
+            <h2 id="experience-title" class="journey-title">A journey of learning,<br>building and growing.</h2>
           </div>
-          <div class="xp-row fade-in">
-            <span class="xp-index">02</span>
-            <div class="xp-row-body">
-              <span class="xp-co">BRAC IT</span>
-              <h3 class="xp-role">Intern</h3>
-              <span class="xp-date">Jul 2024 — Oct 2024</span>
-            </div>
-          </div>
-          <div class="xp-row fade-in">
-            <span class="xp-index">03</span>
-            <div class="xp-row-body">
-              <span class="xp-co">Bongo</span>
-              <h3 class="xp-role">Virtual Intern, Anti-Piracy</h3>
-              <span class="xp-date">Apr 2024 — Aug 2024</span>
-            </div>
-          </div>
-        </div>
+          <p class="journey-note">Every chapter adds<br>a new perspective.</p>
+        </header>
+        <ol class="journey-track">
+          <li class="journey-step">
+            <article class="journey-entry">
+              <p class="journey-label">Current role / Nov 2024 — Present</p>
+              <img class="journey-logo" src="assets/companies/brac-it.png" alt="BRAC IT Services" width="135" height="32">
+              <h3 class="journey-role">Associate UX Designer</h3>
+              <p class="journey-description">Designing enterprise web and mobile tools, from business requirements to user flows, interfaces, and prototypes. Working with product managers, business analysts, and developers through design reviews and handoff.</p>
+            </article>
+          </li>
+          <li class="journey-step">
+            <article class="journey-entry">
+              <p class="journey-label">Internship / Jul 2024 — Oct 2024</p>
+              <img class="journey-logo" src="assets/companies/brac-it.png" alt="BRAC IT Services" width="135" height="32">
+              <h3 class="journey-role">UX Design Intern</h3>
+              <p class="journey-description">Supported enterprise UX design through user flows, wireframes, and interface design, refining work through feedback from the team.</p>
+            </article>
+          </li>
+          <li class="journey-step">
+            <article class="journey-entry">
+              <p class="journey-label">Internship / Apr 2024 — Aug 2024</p>
+              <img class="journey-logo journey-logo--bongo" src="assets/companies/bongo-white.svg" alt="Bongo BD" width="135" height="32">
+              <h3 class="journey-role">Virtual Intern, Anti-Piracy</h3>
+              <p class="journey-description">Identified pirated content online in accordance with Bongo’s anti-piracy policies.</p>
+            </article>
+          </li>
+        </ol>
+        <p class="journey-note journey-closing fade-in">Still learning, always.</p>
       </div>
     </section>
 
@@ -329,6 +347,7 @@
 
   <!-- Footer / Contact -->
   <footer id="contact" class="contact-panel">
+    <div class="footer-flowers" id="footerFlowers" aria-hidden="true"></div>
     <div class="container contact-inner">
       <div class="ftr-top fade-in">
         <div class="ftr-heading">
@@ -346,7 +365,6 @@
       </div>
       <div class="ftr-bottom">
         <p class="ftr-wordmark" aria-hidden="true">Rimi.</p>
-        <div class="footer-flowers" id="footerFlowers" aria-hidden="true"></div>
       </div>
       <div class="ftr-utility">
         <p class="ftr-credit">© 2026 Rimi. A little curiosity in every detail.</p>
