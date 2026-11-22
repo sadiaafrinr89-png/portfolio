@@ -38,6 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
       cardWraps.forEach((wrap) => {
         const card = wrap.querySelector('.work-card');
         if (!card) return;
+        // Mobile cards are ordinary stacked content, not scaled sticky panels.
+        if (window.matchMedia('(max-width: 860px)').matches) {
+          card.style.removeProperty('transform');
+          return;
+        }
         const top = wrap.getBoundingClientRect().top;
         // top === viewportHeight: card just entering at the bottom edge (progress 0).
         // top === 0: card fully arrived and pinned (progress 1, holds here).
@@ -68,8 +73,24 @@ document.addEventListener('DOMContentLoaded', () => {
   menuBtn.addEventListener('click', () => {
     const isOpen = mobileMenu.classList.toggle('open');
     menuBtn.setAttribute('aria-expanded', String(isOpen));
+    menuBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
   });
 
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      mobileMenu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'Open menu');
+      menuBtn.focus();
+    }
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 860) {
+      mobileMenu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'Open menu');
+    }
+  });
   header.addEventListener('focusin', () => header.classList.remove('nav--hidden'));
 
   // --- Hide nav on scroll down, reveal on scroll up ---
@@ -144,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resizeCanvas);
 
     window.addEventListener('mousemove', () => {
+      if (document.body.classList.contains('cursor-over-control')) return;
       if (particles.length >= MAX_PARTICLES) particles.shift();
       particles.push({
         x: mouseX + (Math.random() - 0.5) * 6,
@@ -181,8 +203,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // elements, including the nav links — a small dot-scale doesn't need
     // the nav exclusion the old 56px ring required.
     document.querySelectorAll('a, button').forEach((el) => {
-      el.addEventListener('mouseenter', () => cursorDot.classList.add('cursor-dot--hover'));
-      el.addEventListener('mouseleave', () => cursorDot.classList.remove('cursor-dot--hover'));
+      el.addEventListener('mouseenter', () => {
+        cursorDot.classList.add('cursor-dot--hover');
+        document.body.classList.add('cursor-over-control');
+        particles = [];
+        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorDot.classList.remove('cursor-dot--hover');
+        document.body.classList.remove('cursor-over-control');
+      });
+    });
+
+    // Keep the cursor visible against the filled Resume action.
+    document.querySelectorAll('.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]').forEach((el) => {
+      el.addEventListener('mouseenter', () => cursorDot.classList.add('cursor-dot--resume'));
+      el.addEventListener('mouseleave', () => cursorDot.classList.remove('cursor-dot--resume'));
+      el.addEventListener('click', () => cursorDot.classList.remove('cursor-dot--resume'));
     });
 
     // Swap the dot's color (and, below, newly-spawned trail particles) to

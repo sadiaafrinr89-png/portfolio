@@ -1553,7 +1553,7 @@ body.cursor-active button {
   box-shadow: none;
   transform: none;
 }
-.mobile-menu a[href="assets/resume.pdf"] {
+.mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"] {
   align-self: flex-start;
   min-height: 48px;
   padding: 12px 18px;
@@ -1569,13 +1569,13 @@ body.cursor-active button {
 
 /* Resume is the primary navigation action. */
 .nav-link--resume,
-.mobile-menu a[href="assets/resume.pdf"] {
+.mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"] {
   background: var(--brand-dark);
   border-color: var(--brand-dark);
   color: var(--bg);
 }
 .nav-link--resume:hover,
-.mobile-menu a[href="assets/resume.pdf"]:hover {
+.mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]:hover {
   background: var(--brand-dark);
   border-color: var(--brand-dark);
   color: var(--bg);
@@ -1946,4 +1946,155 @@ body.cursor-active button {
 }
 @media (max-width: 860px) {
   .about-intro .section-heading { font-size: clamp(44px, 8vw, 64px); }
+}
+
+/* Mobile layout repair. Desktop composition and animation remain unchanged. */
+@media (max-width: 860px) {
+  html { scroll-padding-top: 96px; }
+  main, section, .container, .about-media, .about-text { min-width: 0; }
+  .container { padding-inline: 20px; }
+  .nav { top: max(12px, env(safe-area-inset-top)); left: 20px; right: 20px; gap: 16px; }
+  .logo--floral img { width: 144px; height: 49px; }
+  .nav-pill { flex: 0 0 auto; padding: 4px; }
+  .menu-btn { width: 44px; height: 44px; }
+  .mobile-menu { top: calc(max(12px, env(safe-area-inset-top)) + 66px); left: 20px; right: 20px; max-height: calc(100svh - 110px); overflow-y: auto; }
+  .mobile-menu a { min-height: 48px; }
+  .hero { padding: 112px 20px 56px; }
+  .hero-inner { display: flex; min-height: 0; padding: 0; justify-content: flex-start; align-items: stretch; }
+  .hero-eyebrow { margin: 0 0 14px 18px; font-size: 20px; }
+  .hero-name { width: 100%; max-width: 100%; font-size: clamp(42px, 11.8vw, 96px); line-height: .98; }
+  .hero-note, .hero-lede { order: 2; width: 100%; max-width: 36ch; margin: 24px 0 0; font-size: 18px; line-height: 1.55; }
+  .hero-portrait { order: 3; align-self: center; width: min(70vw, 280px); margin: 28px 0 0; transform: none; }
+  .work { padding-top: 0; padding-bottom: 40px; }
+  .work-intro { padding: 48px 20px 40px; }
+  .work-intro-sub { width: 100%; max-width: 38ch; font-size: 17px; }
+  .work-list { padding-inline: 20px; }
+  .work-card-wrap { position: static; min-height: 0; height: auto; padding: 0; margin: 38px 0 28px; }
+  .work-card-wrap .work-card { width: 100%; min-height: 0; height: auto; max-height: none; margin: 0; padding: 22px 18px; transform: none !important; justify-content: flex-start; border-radius: 22px; }
+  .work-card-top { width: 100%; align-items: flex-start; gap: 12px; margin-bottom: 22px; }
+  .work-card-heading { flex: 1 1 0; min-width: 0; max-width: none; }
+  .work-card-title { font-size: clamp(26px, 5.2vw, 38px); line-height: 1.12; max-width: 100%; overflow-wrap: break-word; }
+  .work-card-index { flex: 0 0 auto; font-size: 28px; }
+  .work-card-type { font-size: 12px; line-height: 1.5; }
+  .work-card-body { flex: 0 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto; width: 100%; gap: 20px; }
+  .work-card-media { flex: none; width: 100%; height: auto; aspect-ratio: 4 / 3; padding: 0; background: transparent; }
+  .work-card-screen { width: 100%; height: 100%; }
+  .work-card-text { width: 100%; min-width: 0; gap: 18px; }
+  .work-card-desc { font-size: 16px; line-height: 1.65; max-width: none; }
+  .work-card-tag { min-height: 44px; display: inline-flex; align-items: center; }
+  .about { min-height: 0; padding: 64px 0 80px; }
+  .about-intro { margin-bottom: 28px; }
+  .about .about-subtitle { position: static; display: block; width: fit-content; max-width: 100%; margin: 18px 0 0 12px; transform: rotate(-6deg); font-size: 22px; line-height: 1.3; white-space: normal; }
+  .about-inner { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .about-media { width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 16px 10px 20px; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: #b8ada2 transparent; -webkit-overflow-scrolling: touch; }
+  .about-media .about-scrapbook { flex: 0 0 auto; width: 560px; min-width: 560px; max-width: none; margin: 0; }
+  .about-text { width: 100%; max-width: none; }
+  .about-copy p { font-size: clamp(20px, 3.2vw, 24px); line-height: 1.6; max-width: 40ch; }
+  .about-copy p + p { margin-top: 22px; }
+  .experience.experience-timeline { padding: 56px 0 44px; }
+  .journey-header { gap: 22px; margin-bottom: 40px; }
+  .journey-title { font-size: clamp(29px, 5.8vw, 42px); }
+  .journey-step { padding-left: 30px; padding-bottom: 36px; }
+  .journey-role { font-size: 25px; }
+  .journey-description { font-size: 15px; line-height: 1.65; }
+  .journey-label { font-size: 11px; overflow-wrap: anywhere; }
+  .contact-panel { padding: 40px 0 24px; }
+  .ftr-headline { font-size: clamp(48px, 10vw, 68px); }
+  .ftr-support { max-width: 32ch; font-size: 16px; line-height: 1.6; }
+  .ftr-contact-row { width: 100%; gap: 18px; }
+  .ftr-email { max-width: 100%; }
+  .ftr-socials { flex-wrap: wrap; gap: 20px; }
+  .ftr-bottom { min-height: 230px; padding-bottom: 90px; }
+  .ftr-utility { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .ftr-credit { max-width: 100%; overflow-wrap: anywhere; }
+}
+
+/* Keep folder tabs on desktop; omit the protruding shape on mobile. */
+@media (max-width: 860px) {
+  .work-card-tab { display: none; }
+}
+
+/* Resume feedback, with contrast for the custom cursor. */
+:is(.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]) {
+  transition: background-color 190ms ease, box-shadow 190ms ease, transform 190ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  :is(.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]):hover {
+    background: #841b12;
+    color: var(--bg);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgb(104 9 0 / .18);
+  }
+}
+:is(.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]):active {
+  transform: translateY(0);
+  background: var(--brand-dark);
+  box-shadow: 0 1px 3px rgb(104 9 0 / .12);
+}
+:is(.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]):focus-visible {
+  outline: 2px solid var(--brand-dark);
+  outline-offset: 4px;
+}
+/* Warm inversion keeps content visible beneath the cursor on links and buttons. */
+.cursor-dot.cursor-dot--hover {
+  background: transparent;
+  mix-blend-mode: normal;
+  -webkit-backdrop-filter: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22burgundy%22%20color-interpolation-filters%3D%22sRGB%22%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%22-.126%20-.423%20-.043%200%201%20-.201%20-.676%20-.068%200%20.98%20-.191%20-.644%20-.065%200%20.9%200%200%200%201%200%22%2F%3E%3C%2Ffilter%3E%3C%2Fsvg%3E#burgundy");
+  backdrop-filter: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cfilter%20id%3D%22burgundy%22%20color-interpolation-filters%3D%22sRGB%22%3E%3CfeColorMatrix%20type%3D%22matrix%22%20values%3D%22-.126%20-.423%20-.043%200%201%20-.201%20-.676%20-.068%200%20.98%20-.191%20-.644%20-.065%200%20.9%200%200%200%201%200%22%2F%3E%3C%2Ffilter%3E%3C%2Fsvg%3E#burgundy");
+  box-shadow: none;
+  transition: width .2s ease-out, height .2s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]) { transition: none; }
+  :is(.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]):hover { transform: none; }
+}
+
+body.cursor-over-control .cursor-particles,
+body.cursor-over-control .cursor-ring { visibility: hidden; }
+
+.cursor-dot.cursor-dot--resume,
+.cursor-dot.cursor-dot--footer.cursor-dot--hover {
+  -webkit-backdrop-filter: grayscale(1) invert(1) sepia(.3) brightness(1.15);
+  backdrop-filter: grayscale(1) invert(1) sepia(.3) brightness(1.15);
+}
+
+/* Exact footer flower: original fill/outline pairs, stroke width, and colors. */
+.cursor-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  clip-path: none;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%2294%2092%20206%20197%22%3E%3Cg%3E%3Cpath%20d%3D%22M195%20182C175%20161%20131%20135%20141%20118C148%20105%20172%20105%20182%20115C194%20130%20195%20160%20195%20182Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M195%20175C176%20159%20151%20124%20159%20109C165%2097.9998%20184%20104%20192%20117C205%20134%20201%20157%20195%20175Z%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M192%20183C196%20151%20209%20106%20235%20103C258%2099.9997%20270%20114%20263%20134C256%20156%20219%20171%20192%20183Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M202%20174C222%20150%20241%20121%20264%20129C284%20136%20286%20154%20273%20170C261%20184%20235%20182%20213%20189%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M196%20185C225%20183%20262%20175%20278%20190C294%20205%20286%20233%20270%20240C241%20252%20218%20219%20196%20185Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M213%20189C238%20200%20276%20218%20278%20239C281%20257%20268%20270%20252%20269C226%20270%20210%20235%20204%20195%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M200%20185C206%20213%20209%20260%20193%20273C181%20283%20169%20272%20170%20255C169%20228%20183%20204%20200%20185Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M204%20195C201%20226%20186%20268%20170%20274C149%20283%20150%20260%20158%20239C164%20222%20172%20209%20178%20202%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M198%20183C169%20174%20123%20150%20110%20168C100%20183%20104%20215%20120%20220C141%20227%20173%20204%20198%20183Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M178%20202C156%20203%20133%20213%20119%20201C107%20192%20104%20164%20114%20154C132%20135%20163%20160%20186%20170%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%2294%2092%20206%20197%22%3E%3Cg%3E%3Cpath%20d%3D%22M195%20182C175%20161%20131%20135%20141%20118C148%20105%20172%20105%20182%20115C194%20130%20195%20160%20195%20182Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M195%20175C176%20159%20151%20124%20159%20109C165%2097.9998%20184%20104%20192%20117C205%20134%20201%20157%20195%20175Z%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M192%20183C196%20151%20209%20106%20235%20103C258%2099.9997%20270%20114%20263%20134C256%20156%20219%20171%20192%20183Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M202%20174C222%20150%20241%20121%20264%20129C284%20136%20286%20154%20273%20170C261%20184%20235%20182%20213%20189%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M196%20185C225%20183%20262%20175%20278%20190C294%20205%20286%20233%20270%20240C241%20252%20218%20219%20196%20185Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M213%20189C238%20200%20276%20218%20278%20239C281%20257%20268%20270%20252%20269C226%20270%20210%20235%20204%20195%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M200%20185C206%20213%20209%20260%20193%20273C181%20283%20169%20272%20170%20255C169%20228%20183%20204%20200%20185Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M204%20195C201%20226%20186%20268%20170%20274C149%20283%20150%20260%20158%20239C164%20222%20172%20209%20178%20202%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M198%20183C169%20174%20123%20150%20110%20168C100%20183%20104%20215%20120%20220C141%20227%20173%20204%20198%20183Z%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M178%20202C156%20203%20133%20213%20119%20201C107%20192%20104%20164%20114%20154C132%20135%20163%20160%20186%20170%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.cursor-dot--hover { width: 26px; height: 26px; }
+
+.cursor-dot:not(.cursor-dot--hover) {
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%2294%2092%20206%20197%22%3E%3Cg%3E%3Cpath%20d%3D%22M195%20182C175%20161%20131%20135%20141%20118C148%20105%20172%20105%20182%20115C194%20130%20195%20160%20195%20182Z%22%20fill%3D%22%23680900%22%2F%3E%3Cpath%20d%3D%22M195%20175C176%20159%20151%20124%20159%20109C165%2097.9998%20184%20104%20192%20117C205%20134%20201%20157%20195%20175Z%22%20fill%3D%22none%22%20stroke%3D%22%23B58C87%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M192%20183C196%20151%20209%20106%20235%20103C258%2099.9997%20270%20114%20263%20134C256%20156%20219%20171%20192%20183Z%22%20fill%3D%22%23680900%22%2F%3E%3Cpath%20d%3D%22M202%20174C222%20150%20241%20121%20264%20129C284%20136%20286%20154%20273%20170C261%20184%20235%20182%20213%20189%22%20fill%3D%22none%22%20stroke%3D%22%23B58C87%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M196%20185C225%20183%20262%20175%20278%20190C294%20205%20286%20233%20270%20240C241%20252%20218%20219%20196%20185Z%22%20fill%3D%22%23680900%22%2F%3E%3Cpath%20d%3D%22M213%20189C238%20200%20276%20218%20278%20239C281%20257%20268%20270%20252%20269C226%20270%20210%20235%20204%20195%22%20fill%3D%22none%22%20stroke%3D%22%23B58C87%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M200%20185C206%20213%20209%20260%20193%20273C181%20283%20169%20272%20170%20255C169%20228%20183%20204%20200%20185Z%22%20fill%3D%22%23680900%22%2F%3E%3Cpath%20d%3D%22M204%20195C201%20226%20186%20268%20170%20274C149%20283%20150%20260%20158%20239C164%20222%20172%20209%20178%20202%22%20fill%3D%22none%22%20stroke%3D%22%23B58C87%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M198%20183C169%20174%20123%20150%20110%20168C100%20183%20104%20215%20120%20220C141%20227%20173%20204%20198%20183Z%22%20fill%3D%22%23680900%22%2F%3E%3Cpath%20d%3D%22M178%20202C156%20203%20133%20213%20119%20201C107%20192%20104%20164%20114%20154C132%20135%20163%20160%20186%20170%22%20fill%3D%22none%22%20stroke%3D%22%23B58C87%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Light petals preserve the exact cursor flower against the dark footer. */
+.cursor-dot.cursor-dot--footer:not(.cursor-dot--hover) {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%2294%2092%20206%20197%22%3E%3Cg%3E%3Cpath%20d%3D%22M195%20182C175%20161%20131%20135%20141%20118C148%20105%20172%20105%20182%20115C194%20130%20195%20160%20195%20182Z%22%20fill%3D%22%23FFF9E8%22%2F%3E%3Cpath%20d%3D%22M195%20175C176%20159%20151%20124%20159%20109C165%2097.9998%20184%20104%20192%20117C205%20134%20201%20157%20195%20175Z%22%20fill%3D%22none%22%20stroke%3D%22%23D5ABA4%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M192%20183C196%20151%20209%20106%20235%20103C258%2099.9997%20270%20114%20263%20134C256%20156%20219%20171%20192%20183Z%22%20fill%3D%22%23FFF9E8%22%2F%3E%3Cpath%20d%3D%22M202%20174C222%20150%20241%20121%20264%20129C284%20136%20286%20154%20273%20170C261%20184%20235%20182%20213%20189%22%20fill%3D%22none%22%20stroke%3D%22%23D5ABA4%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M196%20185C225%20183%20262%20175%20278%20190C294%20205%20286%20233%20270%20240C241%20252%20218%20219%20196%20185Z%22%20fill%3D%22%23FFF9E8%22%2F%3E%3Cpath%20d%3D%22M213%20189C238%20200%20276%20218%20278%20239C281%20257%20268%20270%20252%20269C226%20270%20210%20235%20204%20195%22%20fill%3D%22none%22%20stroke%3D%22%23D5ABA4%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M200%20185C206%20213%20209%20260%20193%20273C181%20283%20169%20272%20170%20255C169%20228%20183%20204%20200%20185Z%22%20fill%3D%22%23FFF9E8%22%2F%3E%3Cpath%20d%3D%22M204%20195C201%20226%20186%20268%20170%20274C149%20283%20150%20260%20158%20239C164%20222%20172%20209%20178%20202%22%20fill%3D%22none%22%20stroke%3D%22%23D5ABA4%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cpath%20d%3D%22M198%20183C169%20174%20123%20150%20110%20168C100%20183%20104%20215%20120%20220C141%20227%20173%20204%20198%20183Z%22%20fill%3D%22%23FFF9E8%22%2F%3E%3Cpath%20d%3D%22M178%20202C156%20203%20133%20213%20119%20201C107%20192%20104%20164%20114%20154C132%20135%20163%20160%20186%20170%22%20fill%3D%22none%22%20stroke%3D%22%23D5ABA4%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+}
+
+/* Original footer-flower geometry replaces only the two dots in hero Rimi. */
+.hero-flower-i { position: relative; display: inline-block; }
+.hero-flower-i .hero-i-flower {
+  position: absolute;
+  width: .28em;
+  height: .28em;
+  max-width: none;
+  left: 50%;
+  top: -.01em;
+  transform: translateX(-50%);
+  overflow: visible;
+  pointer-events: none;
 }
