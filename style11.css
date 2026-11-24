@@ -2098,3 +2098,7 @@ body.cursor-over-control .cursor-ring { visibility: hidden; }
   overflow: visible;
   pointer-events: none;
 }
+
+/* Original wordmark with the footer flower. */
+.logo--wordmark { display: inline-flex; align-items: center; gap: 0; flex: 0 0 auto; line-height: 1.232; }
+.logo--wordmark .logo-flower { display: block; width: 28px; height: 28px; flex: none; }
