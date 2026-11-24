@@ -1844,8 +1844,7 @@ body.cursor-active button {
 .journey-entry { padding: 0 clamp(36px, 5vw, 80px) 0 clamp(16px, 2vw, 40px); max-width: 540px; }
 .journey-step:nth-child(even) .journey-entry { grid-column: 2; padding: 0 clamp(16px, 2vw, 40px) 0 clamp(36px, 5vw, 80px); }
 .journey-label { font-size: 10px; line-height: 1.6; text-transform: uppercase; letter-spacing: .055em; color: #73776f; margin-bottom: 18px; }
-.journey-logo { display: block; width: 135px; height: 32px; object-fit: contain; object-position: left center; margin-bottom: 14px; }
-.journey-logo--bongo { filter: brightness(0); }
+.journey-company { display: flex; align-items: center; min-height: 32px; margin: 0 0 14px; font-family: var(--font-body); font-size: 18px; font-weight: 500; line-height: 1.5; color: var(--brand-dark); }
 .journey-role { font-family: var(--font-display); font-size: clamp(24px, 2.2vw, 34px); font-weight: 500; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 14px; }
 .journey-description { font-family: var(--font-body); font-size: 14px; line-height: 1.75; color: #4e554e; max-width: 45ch; }
 .journey-closing { width: fit-content; margin: 16px 5% 0 auto; font-size: 22px; }
