@@ -98,24 +98,25 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastScrollY = window.scrollY;
   let scrollTicking = false;
 
-  if (!prefersReducedMotion) {
-    window.addEventListener('scroll', () => {
-      if (scrollTicking) return;
-      scrollTicking = true;
-      requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        const scrolledPastThreshold = currentScrollY > 120;
-        const scrollingDown = currentScrollY > lastScrollY;
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(() => {
+      const currentScrollY = Math.max(0, window.scrollY);
+      const delta = currentScrollY - lastScrollY;
+      const keepVisible = mobileMenu.classList.contains('open') ||
+        header.querySelector(':focus-visible');
 
-        if (!mobileMenu.classList.contains('open') && !header.contains(document.activeElement)) {
-          header.classList.toggle('nav--hidden', scrollingDown && scrolledPastThreshold);
-        }
-
+      if (currentScrollY <= 120 || keepVisible) {
+        header.classList.remove('nav--hidden');
         lastScrollY = currentScrollY;
-        scrollTicking = false;
-      });
-    }, { passive: true });
-  }
+      } else if (Math.abs(delta) >= 8) {
+        header.classList.toggle('nav--hidden', delta > 0);
+        lastScrollY = currentScrollY;
+      }
+      scrollTicking = false;
+    });
+  }, { passive: true });
 
   // --- Custom cursor: precise dot + a trail of small roaming particles,
   // plus a ring that appears only on hover (grows further + labels "View"
@@ -216,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Keep the cursor visible against the filled Resume action.
-    document.querySelectorAll('.nav-link--resume, .mobile-menu a[href*="/file/d/164sw3rKd1z-nVhCJYqG_9FlwjYkNmguk/"]').forEach((el) => {
+    document.querySelectorAll('.nav-link--resume, .mobile-menu a[href*="/file/d/1IVp_khQS7Te-f-xGHnGtP85VSrhT9bW0/"]').forEach((el) => {
       el.addEventListener('mouseenter', () => cursorDot.classList.add('cursor-dot--resume'));
       el.addEventListener('mouseleave', () => cursorDot.classList.remove('cursor-dot--resume'));
       el.addEventListener('click', () => cursorDot.classList.remove('cursor-dot--resume'));
